@@ -30,17 +30,50 @@ type Client struct {
  * Perform a simple search with a term and location.
  */
 func (client *Client) doSimpleSearch(term, location string) (result SearchResult, err error) {
-	// params := map[string]string{
-	// 	"term":     term,
-	// 	"location": location,
-	// }
-	// rawResult, err := client.makeRequest(SEARCH_AREA, "", params)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return SearchResult{}, err
-	// }
-	rawResult, err := ioutil.ReadFile("results.txt")
-	fmt.Println(string(rawResult))
+
+	// set up the query options
+	params := map[string]string{
+		"term":     term,
+		"location": location,
+	}
+
+	// perform the search request
+	rawResult, err := client.makeRequest(SEARCH_AREA, "", params)
+	if err != nil {
+		fmt.Println(err)
+		return SearchResult{}, err
+	}
+
+	// convert the result from json
+	err = json.Unmarshal(rawResult, &result)
+	if err != nil {
+		fmt.Println(err)
+		return SearchResult{}, err
+	}
+	return result, nil
+}
+
+/**
+ * doSearch
+ * Perform a complex search with full search options.
+ */
+func (client *Client) doSearch(options SearchOptions) (result SearchResult, err error) {
+
+	// get the options from the search provider
+	params, err := options.GetParameters()
+	if err != nil {
+		fmt.Println(err)
+		return SearchResult{}, err
+	}
+
+	// perform the search request
+	rawResult, err := client.makeRequest(SEARCH_AREA, "", params)
+	if err != nil {
+		fmt.Println(err)
+		return SearchResult{}, err
+	}
+
+	// convert the result from json
 	err = json.Unmarshal(rawResult, &result)
 	if err != nil {
 		fmt.Println(err)

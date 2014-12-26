@@ -1,12 +1,10 @@
 package yelp
 
-import "net/url"
-
 type Deal struct {
 	Id                      string       // Deal identifier
 	Title                   string       // Deal title
-	Url                     url.URL      // Deal url
-	Image_url               url.URL      // Deal image url
+	Url                     string       // Deal url
+	Image_url               string       // Deal image url
 	Currency_code           string       // ISO_4217 Currency Code
 	Time_start              float32      // Deal start time (Unix timestamp)
 	Time_end                float32      // Deal end time (optional: this field is present only if the Deal ends)
@@ -20,7 +18,7 @@ type Deal struct {
 
 type DealOption struct {
 	Title                    string  // Deal option title
-	Purchase_url             url.URL // Deal option url for purchase
+	Purchase_url             string  // Deal option url for purchase
 	Price                    float32 // Deal option price (in cents)
 	Formatted_price          string  // Deal option price (formatted, e.g. "$6")
 	Original_price           float32 // Deal option original price (in cents)
@@ -31,8 +29,8 @@ type DealOption struct {
 
 type GiftCertificate struct {
 	Id              string                   // Gift certificate identifier
-	Url             url.URL                  // Gift certificate landing page url
-	Image_url       url.URL                  //	Gift certificate image url
+	Url             string                   // Gift certificate landing page url
+	Image_url       string                   //	Gift certificate image url
 	Currency_code   string                   // ISO_4217 Currency Code
 	Unused_balances string                   // Whether unused balances are returned as cash or store credit
 	Options         []GiftCertificateOptions //	Gift certificate options
@@ -46,18 +44,18 @@ type GiftCertificateOptions struct {
 type Review struct {
 	Id                     string  // Review identifier
 	Rating                 float32 // Rating from 1-5
-	Rating_image_url       url.URL // URL to star rating image for this business (size = 84x17)
-	Rating_image_small_url url.URL // URL to small version of rating image for this business (size = 50x10)
-	Rating_image_large_url url.URL // URL to large version of rating image for this business (size = 166x30)
+	Rating_image_url       string  // URL to star rating image for this business (size = 84x17)
+	Rating_image_small_url string  // URL to small version of rating image for this business (size = 50x10)
+	Rating_image_large_url string  // URL to large version of rating image for this business (size = 166x30)
 	Excerpt                string  // Review excerpt
 	Time_created           float32 // Time created (Unix timestamp)
 	User                   User    // User who wrote the review
 }
 
 type User struct {
-	Id        string  // User identifier
-	Image_url url.URL // User profile image url
-	Name      string  // User name
+	Id        string // User identifier
+	Image_url string // User profile image url
+	Name      string // User name
 }
 
 type Category struct {

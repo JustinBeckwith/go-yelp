@@ -27,10 +27,7 @@ func getClient() Client {
 
 func TestMakeRequest(t *testing.T) {
 	client := getClient()
-	result := client.doSimpleSearch("coffee", "seattle")
-	if result == "" {
-		t.Errorf("the result was empty")
-		return
-	}
+	result, err := client.doSimpleSearch("coffee", "seattle")
+	check(err)
 	fmt.Println(result)
 }

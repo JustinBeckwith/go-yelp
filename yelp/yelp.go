@@ -30,16 +30,17 @@ type Client struct {
  * Perform a simple search with a term and location.
  */
 func (client *Client) doSimpleSearch(term, location string) (result SearchResult, err error) {
-	params := map[string]string{
-		"term":     term,
-		"location": location,
-	}
-	rawResult, err := client.makeRequest(SEARCH_AREA, "", params)
-	if err != nil {
-		fmt.Println(err)
-		return SearchResult{}, err
-	}
-
+	// params := map[string]string{
+	// 	"term":     term,
+	// 	"location": location,
+	// }
+	// rawResult, err := client.makeRequest(SEARCH_AREA, "", params)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	return SearchResult{}, err
+	// }
+	rawResult, err := ioutil.ReadFile("results.txt")
+	fmt.Println(string(rawResult))
 	err = json.Unmarshal(rawResult, &result)
 	if err != nil {
 		fmt.Println(err)

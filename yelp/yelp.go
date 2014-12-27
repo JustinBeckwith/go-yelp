@@ -101,7 +101,10 @@ func (client *Client) getBusiness(name string) (result Business, err error) {
 	return result, nil
 }
 
-// Internal API used to make underlying requests to the Yelp API.
+/**
+ * makeRequest
+ * Internal API used to make underlying requests to the Yelp API.
+ */
 func (client *Client) makeRequest(area string, id string, params map[string]string) (result []byte, err error) {
 
 	// get the base url
@@ -133,12 +136,15 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 		make(map[string]string),
 	}
 
+	//c.Debug(true)
+
 	// make the request using the oauth lib
 	response, err := c.Get(queryUri.String(), params, token)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
+	fmt.Printf("%v\n", response.Request.URL.String())
 	defer response.Body.Close()
 
 	bits, err := ioutil.ReadAll(response.Body)
@@ -146,6 +152,7 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 		fmt.Println(err)
 		return nil, err
 	}
+	//fmt.Printf("%v", string(bits))
 	return bits, nil
 
 }

@@ -15,7 +15,8 @@ const (
 	BUSINESS_AREA = "/v2/business"
 	SEARCH_AREA   = "/v2/search"
 
-	ERROR_UNSPECIFIED_LOCATION = "You must provide a location for the search"
+	ERROR_UNSPECIFIED_LOCATION = "You must provide a location for the search."
+	ERROR_BUSINESS_NOT_FOUND   = "The business could not be found."
 )
 
 type AuthOptions struct {
@@ -47,16 +48,14 @@ func (client *Client) doSimpleSearch(term, location string) (result SearchResult
 	}
 
 	// perform the search request
-	rawResult, err := client.makeRequest(SEARCH_AREA, "", params)
+	rawResult, _, err := client.makeRequest(SEARCH_AREA, "", params)
 	if err != nil {
-		fmt.Println(err)
 		return SearchResult{}, err
 	}
 
 	// convert the result from json
 	err = json.Unmarshal(rawResult, &result)
 	if err != nil {
-		fmt.Println(err)
 		return SearchResult{}, err
 	}
 	return result, nil
@@ -71,21 +70,18 @@ func (client *Client) doSearch(options SearchOptions) (result SearchResult, err 
 	// get the options from the search provider
 	params, err := options.GetParameters()
 	if err != nil {
-		fmt.Println(err)
 		return SearchResult{}, err
 	}
 
 	// perform the search request
-	rawResult, err := client.makeRequest(SEARCH_AREA, "", params)
+	rawResult, _, err := client.makeRequest(SEARCH_AREA, "", params)
 	if err != nil {
-		fmt.Println(err)
 		return SearchResult{}, err
 	}
 
 	// convert the result from json
 	err = json.Unmarshal(rawResult, &result)
 	if err != nil {
-		fmt.Println(err)
 		return SearchResult{}, err
 	}
 	return result, nil
@@ -96,15 +92,16 @@ func (client *Client) doSearch(options SearchOptions) (result SearchResult, err 
  * Get a single business by name.
  */
 func (client *Client) getBusiness(name string) (result Business, err error) {
-	rawResult, err := client.makeRequest(BUSINESS_AREA, name, nil)
+	rawResult, statusCode, err := client.makeRequest(BUSINESS_AREA, name, nil)
 	if err != nil {
-		fmt.Println(err)
+		if statusCode == 404 {
+			return Business{}, errors.New(ERROR_BUSINESS_NOT_FOUND)
+		}
 		return Business{}, err
 	}
 
 	err = json.Unmarshal(rawResult, &result)
 	if err != nil {
-		fmt.Println(err)
 		return Business{}, err
 	}
 	return result, nil
@@ -114,13 +111,12 @@ func (client *Client) getBusiness(name string) (result Business, err error) {
  * makeRequest
  * Internal API used to make underlying requests to the Yelp API.
  */
-func (client *Client) makeRequest(area string, id string, params map[string]string) (result []byte, err error) {
+func (client *Client) makeRequest(area string, id string, params map[string]string) (result []byte, statusCode int, err error) {
 
 	// get the base url
 	queryUri, err := url.Parse(ROOT_URI)
 	if err != nil {
-		fmt.Println(err)
-		return nil, err
+		return nil, 0, err
 	}
 
 	// add the type of request we're making (search|business)
@@ -145,25 +141,26 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 		make(map[string]string),
 	}
 
-	//c.Debug(true)
-
 	// make the request using the oauth lib
 	response, err := c.Get(queryUri.String(), params, token)
 	if err != nil {
-		fmt.Println(err)
-		return nil, err
+		return nil, response.StatusCode, err
 	}
+
+	// ensure the request returned a 200
+	if response.StatusCode != 200 {
+		return nil, response.StatusCode, errors.New(response.Status)
+	}
+
 	fmt.Printf("%v\n", response.Request.URL.String())
 	defer response.Body.Close()
 
+	// read the body of the response
 	bits, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		fmt.Println(err)
-		return nil, err
+		return nil, response.StatusCode, err
 	}
-	//fmt.Printf("%v", string(bits))
-	return bits, nil
-
+	return bits, response.StatusCode, nil
 }
 
 // Create a new yelp search client.  All search operations should go through this API.

@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	CONTAINS_RESULTS        string = "The query returns at least one result"
-	SHOULD_REQUIRE_LOCATION string = "The query should require a location"
+	CONTAINS_RESULTS        string = "The query returns at least one result."
+	SHOULD_REQUIRE_LOCATION string = "The query should require a location."
 )
 
 func check(t *testing.T, e error) {

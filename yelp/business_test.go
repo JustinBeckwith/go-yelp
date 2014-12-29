@@ -13,3 +13,12 @@ func TestBusinessSearch(t *testing.T) {
 	check(t, err)
 	assert(t, result.Name != "", CONTAINS_RESULTS)
 }
+
+/**
+ * Verify searching for a non-existent business throws the right error.
+ */
+func TestNonExistingBusinessSearch(t *testing.T) {
+	client := getClient(t)
+	_, err := client.getBusiness("place-that-doesnt-exist")
+	assert(t, err.Error() == ERROR_BUSINESS_NOT_FOUND, "Searching for a non-existent businsess should return a 404 error")
+}

@@ -5,12 +5,18 @@ import (
 )
 
 /**
- * Check using location options with bounding coordinates
+ * Verify doing a search that includes locale options.
  */
-func TestBoundOptions(t *testing.T) {
+func TestLocaleOptions(t *testing.T) {
 	client := getClient()
 	options := SearchOptions{
-		BoundOptions: &BoundOptions{37.9, -122.5, 37.788022, -122.399797},
+		GeneralOptions: &GeneralOptions{
+			Term: "coffee",
+		},
+		LocaleOptions: &LocaleOptions{
+			cc:   "US",
+			lang: "en",
+		},
 	}
 	result, err := client.doSearch(options)
 	check(err)

@@ -5,15 +5,10 @@ import (
 	"github.com/guregu/null"
 )
 
-type SearchOptions interface {
-	GetParameters() (params map[string]string, err error)
-}
-
 /**
  * Standard general search parameters
  */
 type GeneralOptions struct {
-	SearchOptions
 	Term            string     // Search term (e.g. "food", "restaurants"). If term isn’t included we search everything.
 	Limit           null.Int   // Number of business results to return
 	Offset          null.Int   // Offset the list of returned business results by this amount
@@ -21,11 +16,6 @@ type GeneralOptions struct {
 	Category_filter string     // Category to filter search results with. See the list of supported categories. The category filter can be a list of comma delimited categories. For example, 'bars,french' will filter by Bars and French. The category identifier should be used (for example 'discgolf', not 'Disc Golf').
 	Radius_filter   null.Float // Search radius in meters. If the value is too large, a AREA_TOO_LARGE error may be returned. The max value is 40000 meters (25 miles).
 	Deals_filter    null.Bool  // Whether to exclusively search for businesses with deals
-	// Location        string            // [required]	Specifies the combination of "address, neighborhood, city, state or zip, optional country" to be used when searching for businesses.
-	// Coordinates     CoordinateOptions // An optional latitude, longitude parameter can also be specified as a hint to the geocoder to disambiguate the location text.
-	// Bounds          BoundOptions      // Location is specified by a bounding box, defined by a southwest latitude/longitude and a northeast latitude/longitude geographic coordinate.
-	// Cc              string            // ISO 3166-1 alpha-2 country code. Default country to use when parsing the location field. United States = US, Canada = CA, United Kingdom = GB (not UK).
-	// Lang            string            // ISO 639 language code (default=en). Reviews and snippets written in the specified language will be shown.
 }
 
 func (o *GeneralOptions) GetParameters() (params map[string]string, err error) {

@@ -7,11 +7,17 @@ import (
 /**
  * Check using location options with bounding coordinates
  */
-func TestBoundOptions(t *testing.T) {
+func TestLocationOptions(t *testing.T) {
 	client := getClient()
 	options := SearchOptions{
-		BoundOptions: &BoundOptions{37.9, -122.5, 37.788022, -122.399797},
+		GeneralOptions: &GeneralOptions{
+			Term: "coffee",
+		},
+		LocationOptions: &LocationOptions{
+			Location: "seattle",
+		},
 	}
+
 	result, err := client.doSearch(options)
 	check(err)
 	if len(result.Businesses) == 0 {

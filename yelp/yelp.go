@@ -2,10 +2,12 @@ package yelp
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
-	"github.com/mrjones/oauth"
 	"io/ioutil"
 	"net/url"
+
+	"github.com/mrjones/oauth"
 )
 
 const (
@@ -32,6 +34,11 @@ type Client struct {
  * Perform a simple search with a term and location.
  */
 func (client *Client) doSimpleSearch(term, location string) (result SearchResult, err error) {
+
+	// verify the term and location are not empty
+	if location == "" {
+		return SearchResult{}, errors.New(ERROR_UNSPECIFIED_LOCATION)
+	}
 
 	// set up the query options
 	params := map[string]string{

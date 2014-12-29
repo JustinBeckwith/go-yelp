@@ -23,8 +23,10 @@ func assert(t *testing.T, condition bool, assertion string) {
 	}
 }
 
-// helper function used to read the config from a json file,
-// and create the oauth options
+/**
+ * helper function used to read the config from a json file,
+ * and create the oauth options
+ */
 func getClient(t *testing.T) Client {
 	data, err := ioutil.ReadFile("../config.json")
 	check(t, err)
@@ -36,8 +38,8 @@ func getClient(t *testing.T) Client {
 }
 
 /**
- * Verify a simple search using a search term and
- * location returns a set of results.
+ * Verify a simple search using a search term and location returns
+ * a set of results.
  */
 func TestSimpleSearch(t *testing.T) {
 	client := getClient(t)
@@ -47,11 +49,20 @@ func TestSimpleSearch(t *testing.T) {
 }
 
 /**
- * Verify a simple search using a search term and
- * location returns a set of results.
+ * Ensure validation for a missing location in the search.
  */
 func TestNoLocation(t *testing.T) {
 	client := getClient(t)
-	result, err := client.doSimpleSearch("coffee", "")
+	_, err := client.doSimpleSearch("coffee", "")
 	assert(t, err.Error() == ERROR_UNSPECIFIED_LOCATION, SHOULD_REQUIRE_LOCATION)
+}
+
+/**
+ * Ensure you can query with no term defined and only a location.
+ */
+func TestNoTerm(t *testing.T) {
+	client := getClient(t)
+	result, err := client.doSimpleSearch("", "Seattle")
+	check(t, err)
+	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }

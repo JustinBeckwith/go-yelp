@@ -13,6 +13,9 @@ func TestLocaleOptions(t *testing.T) {
 		GeneralOptions: &GeneralOptions{
 			Term: "coffee",
 		},
+		LocationOptions: &LocationOptions{
+			Location: "seattle",
+		},
 		LocaleOptions: &LocaleOptions{
 			cc:   "US",
 			lang: "en",

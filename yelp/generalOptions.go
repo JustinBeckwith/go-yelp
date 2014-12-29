@@ -24,13 +24,13 @@ func (o *GeneralOptions) GetParameters() (params map[string]string, err error) {
 		ps["term"] = o.Term
 	}
 	if o.Limit.Valid {
-		ps["limit"] = string(o.Limit.Int64)
+		ps["limit"] = fmt.Sprintf("%v", o.Limit.Int64)
 	}
 	if o.Offset.Valid {
-		ps["offset"] = string(o.Offset.Int64)
+		ps["offset"] = fmt.Sprintf("%v", o.Offset.Int64)
 	}
 	if o.Sort.Valid {
-		ps["sort"] = string(o.Sort.Int64)
+		ps["sort"] = fmt.Sprintf("%v", o.Sort.Int64)
 	}
 	if o.Category_filter != "" {
 		ps["category_filter"] = o.Category_filter

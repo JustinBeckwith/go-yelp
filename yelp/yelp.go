@@ -143,6 +143,11 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 
 	// make the request using the oauth lib
 	response, err := c.Get(queryUri.String(), params, token)
+
+	// always log the url, and close the request when done
+	fmt.Printf("%v\n", response.Request.URL.String())
+	defer response.Body.Close()
+
 	if err != nil {
 		return nil, response.StatusCode, err
 	}
@@ -151,9 +156,6 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 	if response.StatusCode != 200 {
 		return nil, response.StatusCode, errors.New(response.Status)
 	}
-
-	fmt.Printf("%v\n", response.Request.URL.String())
-	defer response.Body.Close()
 
 	// read the body of the response
 	bits, err := ioutil.ReadAll(response.Body)

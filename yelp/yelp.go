@@ -12,6 +12,8 @@ const (
 	ROOT_URI      = "http://api.yelp.com/"
 	BUSINESS_AREA = "/v2/business"
 	SEARCH_AREA   = "/v2/search"
+
+	ERROR_UNSPECIFIED_LOCATION = "You must provide a location for the search"
 )
 
 type AuthOptions struct {

@@ -8,7 +8,7 @@ import (
  * Verify doing a search that includes locale options.
  */
 func TestLocaleOptions(t *testing.T) {
-	client := getClient()
+	client := getClient(t)
 	options := SearchOptions{
 		GeneralOptions: &GeneralOptions{
 			Term: "coffee",
@@ -19,8 +19,6 @@ func TestLocaleOptions(t *testing.T) {
 		},
 	}
 	result, err := client.doSearch(options)
-	check(err)
-	if len(result.Businesses) == 0 {
-		t.Error("the query returned no results")
-	}
+	check(t, err)
+	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }

@@ -8,13 +8,11 @@ import (
  * Check using location options with bounding coordinates
  */
 func TestBoundOptions(t *testing.T) {
-	client := getClient()
+	client := getClient(t)
 	options := SearchOptions{
 		BoundOptions: &BoundOptions{37.9, -122.5, 37.788022, -122.399797},
 	}
 	result, err := client.doSearch(options)
-	check(err)
-	if len(result.Businesses) == 0 {
-		t.Error("the query returned no results")
-	}
+	check(t, err)
+	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }

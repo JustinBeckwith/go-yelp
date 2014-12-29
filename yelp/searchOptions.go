@@ -2,6 +2,8 @@ package yelp
 
 import (
 	"errors"
+	"fmt"
+	"reflect"
 )
 
 type OptionProvider interface {
@@ -38,49 +40,31 @@ func (o *SearchOptions) GetParameters() (params map[string]string, err error) {
 	if o.BoundOptions != nil {
 		locOptionsCnt++
 	}
+
+	if locOptionsCnt == 0 {
+		return params, errors.New("A single location search options type (Location, Coordinate, Bound) must be used.")
+	}
 	if locOptionsCnt > 1 {
 		return params, errors.New("Only a single location search options type (Location, Coordinate, Bound) can be used at a time.")
 	}
+	fmt.Printf("There are %v location options defined\n", locOptionsCnt)
 
 	// create an empty map of options
 	params = make(map[string]string)
 
-	err = appendOptions(o.GeneralOptions, &params)
-	if err != nil {
-		return params, err
-	}
-	err = appendOptions(o.LocaleOptions, &params)
-	if err != nil {
-		return params, err
-	}
-	err = appendOptions(o.LocationOptions, &params)
-	if err != nil {
-		return params, err
-	}
-	err = appendOptions(o.CoordinateOptions, &params)
-	if err != nil {
-		return params, err
-	}
-	err = appendOptions(o.BoundOptions, &params)
-	if err != nil {
-		return params, err
+	// reflect over the properties in o, adding parameters to the global map
+	val := reflect.ValueOf(o).Elem()
+	for i := 0; i < val.NumField(); i++ {
+		if !val.Field(i).IsNil() {
+			o := val.Field(i).Interface().(OptionProvider)
+			fieldParams, err := o.GetParameters()
+			if err != nil {
+				return params, err
+			}
+			for k, v := range fieldParams {
+				params[k] = v
+			}
+		}
 	}
 	return params, nil
-}
-
-func appendOptions(optionProvider OptionProvider, output *map[string]string) (err error) {
-	if optionProvider != nil {
-		params, err := optionProvider.GetParameters()
-		if err != nil {
-			return err
-		}
-		appendToMap(&params, output)
-	}
-	return nil
-}
-
-func appendToMap(src, dst *map[string]string) {
-	for k, v := range *src {
-		(*dst)[k] = v
-	}
 }

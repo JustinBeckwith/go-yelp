@@ -50,7 +50,7 @@ client := yelp.CreateClient(options)
 result, err := client.DoSimpleSearch("coffee", "seattle")
 ```
 
-For more complex searches, the `doSearch` method allows for searching based on a combination of general search criteria, and advanced location options:
+For more complex searches, the `DoSearch` method allows for searching based on a combination of general search criteria, and advanced location options:
 
 ```go
 // Build an advanced set of search criteria that include 
@@ -72,8 +72,8 @@ options := SearchOptions{
 result, err := client.DoSearch(options)
 ```
 
-### The business API
-To directly search for a business by name, use the `getBusiness` method on the client:
+### The Business API
+To directly search for a business by name, use the `client.GetBusiness(...)` method on the client:
 
 ```go
 client := yelp.CreateClient(options)

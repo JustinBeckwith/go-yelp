@@ -1,4 +1,4 @@
-// go-yelp provides a lightweight wrapper around the Yelp REST API.  It supports authentication with
+// Package yelp provides a lightweight wrapper around the Yelp REST API.  It supports authentication with
 // OAuth 1.0, the Search API, and the Business API.
 package yelp
 
@@ -13,12 +13,12 @@ import (
 )
 
 const (
-	ROOT_URI      = "http://api.yelp.com/"
-	BUSINESS_AREA = "/v2/business"
-	SEARCH_AREA   = "/v2/search"
+	root_uri      = "http://api.yelp.com/"
+	business_area = "/v2/business"
+	search_area   = "/v2/search"
 
-	ERROR_UNSPECIFIED_LOCATION = "you must provide a location for the search"
-	ERROR_BUSINESS_NOT_FOUND   = "the business could not be found"
+	error_unspecified_location = "you must provide a location for the search"
+	error_business_not_found   = "the business could not be found"
 )
 
 // AuthOptions provide keys required for using the Yelp API.  Find more
@@ -42,7 +42,7 @@ func (client *Client) DoSimpleSearch(term, location string) (result SearchResult
 
 	// verify the term and location are not empty
 	if location == "" {
-		return SearchResult{}, errors.New(ERROR_UNSPECIFIED_LOCATION)
+		return SearchResult{}, errors.New(error_unspecified_location)
 	}
 
 	// set up the query options
@@ -52,7 +52,7 @@ func (client *Client) DoSimpleSearch(term, location string) (result SearchResult
 	}
 
 	// perform the search request
-	rawResult, _, err := client.makeRequest(SEARCH_AREA, "", params)
+	rawResult, _, err := client.makeRequest(search_area, "", params)
 	if err != nil {
 		return SearchResult{}, err
 	}
@@ -75,7 +75,7 @@ func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err 
 	}
 
 	// perform the search request
-	rawResult, _, err := client.makeRequest(SEARCH_AREA, "", params)
+	rawResult, _, err := client.makeRequest(search_area, "", params)
 	if err != nil {
 		return SearchResult{}, err
 	}
@@ -90,10 +90,10 @@ func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err 
 
 // Get a single business by name.
 func (client *Client) GetBusiness(name string) (result Business, err error) {
-	rawResult, statusCode, err := client.makeRequest(BUSINESS_AREA, name, nil)
+	rawResult, statusCode, err := client.makeRequest(business_area, name, nil)
 	if err != nil {
 		if statusCode == 404 {
-			return Business{}, errors.New(ERROR_BUSINESS_NOT_FOUND)
+			return Business{}, errors.New(error_business_not_found)
 		}
 		return Business{}, err
 	}
@@ -109,7 +109,7 @@ func (client *Client) GetBusiness(name string) (result Business, err error) {
 func (client *Client) makeRequest(area string, id string, params map[string]string) (result []byte, statusCode int, err error) {
 
 	// get the base url
-	queryUri, err := url.Parse(ROOT_URI)
+	queryUri, err := url.Parse(root_uri)
 	if err != nil {
 		return nil, 0, err
 	}

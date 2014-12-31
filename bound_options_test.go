@@ -12,5 +12,5 @@ func TestBoundOptions(t *testing.T) {
 	}
 	result, err := client.DoSearch(options)
 	check(t, err)
-	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
+	assert(t, len(result.Businesses) > 0, contains_results)
 }

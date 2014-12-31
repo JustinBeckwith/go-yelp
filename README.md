@@ -1,7 +1,7 @@
 # go-yelp
 go-yelp is a #golang wrapper for the Yelp REST API. It lets you do all kinds of interesting things like searching for businesses, getting user comments and ratings, and handling common errors. The library is written Go.
 
-[![GoDoc](https://godoc.org/github.com/JustinBeckwith/go-yelp?status.svg)](https://godoc.org/github.com/JustinBeckwith/go-yelp/yelp)
+[![GoDoc](https://godoc.org/github.com/JustinBeckwith/go-yelp?status.svg)](https://godoc.org/github.com/JustinBeckwith/go-yelp)
 
 [![Build Status](https://travis-ci.org/JustinBeckwith/go-yelp.svg?branch=master)](https://travis-ci.org/JustinBeckwith/go-yelp)
 

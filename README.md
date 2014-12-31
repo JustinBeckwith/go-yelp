@@ -5,6 +5,8 @@ go-yelp is a #golang wrapper for the Yelp REST API.  It lets you do all kinds of
 
 [![Build Status](https://travis-ci.org/JustinBeckwith/go-yelp.svg?branch=master)](https://travis-ci.org/JustinBeckwith/go-yelp)
 
+[![Coverage Status](https://coveralls.io/repos/JustinBeckwith/go-yelp/badge.png)](https://coveralls.io/r/JustinBeckwith/go-yelp)
+
 For more information, visit the [Yelp REST API](http://www.yelp.com/developers/documentation/v2/overview).
 
 ## Getting Started

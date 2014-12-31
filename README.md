@@ -1,6 +1,8 @@
 # go-yelp
 go-yelp is a #golang wrapper for the Yelp REST API.  It lets you do all kinds of interesting things like searching for businesses, getting user comments and ratings, and handling common errors.  The library is written Go.
 
+[![GoDoc](https://godoc.org/github.com/JustinBeckwith/go-yelp/yelp?status.svg)](https://godoc.org/github.com/JustinBeckwith/go-yelp/yelp)
+
 For more information, visit the [Yelp REST API](http://www.yelp.com/developers/documentation/v2/overview).
 
 ## Getting Started
@@ -47,7 +49,8 @@ result, err := client.doSimpleSearch("coffee", "seattle")
 For more complex searches, the `doSearch` method allows for searching based on a combination of general search criteria, and advanced location options:
 
 ```go
-// Build an advanced set of search critera that include general options, and location specific options.
+// Build an advanced set of search critera that include 
+// general options, and location specific options.
 options := SearchOptions{
 	GeneralOptions: &GeneralOptions{
 		Term: "food",

@@ -161,6 +161,6 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 }
 
 // Create a new yelp search client.  All search operations should go through this API.
-func CreateClient(options AuthOptions) Client {
+func New(options AuthOptions) Client {
 	return Client{options}
 }

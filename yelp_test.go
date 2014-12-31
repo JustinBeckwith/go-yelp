@@ -52,7 +52,7 @@ func getClient(t *testing.T) Client {
 		err = json.Unmarshal(data, &o)
 		check(t, err)
 	}
-	client := CreateClient(o)
+	client := New(o)
 	return client
 }
 

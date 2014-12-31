@@ -11,22 +11,24 @@ const (
 	SHOULD_REQUIRE_LOCATION string = "The query should require a location."
 )
 
+// Check an error result for a value.  If present, fail the test with
+// an error written to the console.
 func check(t *testing.T, e error) {
 	if e != nil {
 		t.Error(e)
 	}
 }
 
+// Provide a simple way to verify an assertion, and fail the test
+// if that assertion fails.
 func assert(t *testing.T, condition bool, assertion string) {
 	if !condition {
 		t.Errorf("Assertion failed: %v", assertion)
 	}
 }
 
-/**
- * helper function used to read the config from a json file,
- * and create the oauth options
- */
+// Creates a client with keys in a json file, making it possible to run the
+// tests against the public Yelp API.
 func getClient(t *testing.T) Client {
 	data, err := ioutil.ReadFile("../config.json")
 	check(t, err)
@@ -37,10 +39,11 @@ func getClient(t *testing.T) Client {
 	return client
 }
 
-/**
- * Verify a simple search using a search term and location returns
- * a set of results.
- */
+//
+// TESTS
+//
+
+// Verify a simple search using a search term and location returns a set of results.
 func TestSimpleSearch(t *testing.T) {
 	client := getClient(t)
 	result, err := client.doSimpleSearch("coffee", "seattle")
@@ -48,18 +51,14 @@ func TestSimpleSearch(t *testing.T) {
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }
 
-/**
- * Ensure validation for a missing location in the search.
- */
+// Ensure validation for a missing location in the search.
 func TestNoLocation(t *testing.T) {
 	client := getClient(t)
 	_, err := client.doSimpleSearch("coffee", "")
 	assert(t, err.Error() == ERROR_UNSPECIFIED_LOCATION, SHOULD_REQUIRE_LOCATION)
 }
 
-/**
- * Ensure you can query with no term defined and only a location.
- */
+// Ensure you can query with no term defined and only a location.
 func TestNoTerm(t *testing.T) {
 	client := getClient(t)
 	result, err := client.doSimpleSearch("", "Seattle")

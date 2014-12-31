@@ -2,12 +2,12 @@ package yelp
 
 import (
 	"fmt"
+
 	"github.com/guregu/null"
 )
 
-/**
- * Standard general search parameters
- */
+// GeneralOptions includes a set of standard query options for using the search API.
+// They are used along with a location based option to complete a search.
 type GeneralOptions struct {
 	Term            string     // Search term (e.g. "food", "restaurants"). If term isn’t included we search everything.
 	Limit           null.Int   // Number of business results to return
@@ -18,6 +18,9 @@ type GeneralOptions struct {
 	Deals_filter    null.Bool  // Whether to exclusively search for businesses with deals
 }
 
+// The GetParameters method will reflect over the values of the given
+// struct, and provide a type appropriate set of querystring parameters
+// that match the defined values.
 func (o *GeneralOptions) GetParameters() (params map[string]string, err error) {
 	ps := make(map[string]string)
 	if o.Term != "" {

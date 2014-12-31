@@ -4,9 +4,7 @@ import (
 	"testing"
 )
 
-/**
- * Perform a simple search for a business by name.
- */
+// Perform a simple search for a business by name.
 func TestBusinessSearch(t *testing.T) {
 	client := getClient(t)
 	result, err := client.getBusiness("yelp-san-francisco")
@@ -14,9 +12,7 @@ func TestBusinessSearch(t *testing.T) {
 	assert(t, result.Name != "", CONTAINS_RESULTS)
 }
 
-/**
- * Verify searching for a non-existent business throws the right error.
- */
+// Verify searching for a non-existent business throws the right error.
 func TestNonExistingBusinessSearch(t *testing.T) {
 	client := getClient(t)
 	_, err := client.getBusiness("place-that-doesnt-exist")

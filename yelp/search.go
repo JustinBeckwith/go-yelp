@@ -1,5 +1,9 @@
 package yelp
 
+// Every search from the Search API returns a SearchResult, which incldues
+// the region, the total number of results, and a list of matching businesses.
+// The business objects returned by this query are shallow - they will not include
+// deep results such as reviews.
 type SearchResult struct {
 	Region     Region     // Suggested bounds in a map to display results in
 	Total      int        // Total number of business results

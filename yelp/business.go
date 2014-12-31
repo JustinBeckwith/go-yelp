@@ -1,5 +1,6 @@
 package yelp
 
+// Deals define a set of special offerings from the business.
 type Deal struct {
 	Id                      string       // Deal identifier
 	Title                   string       // Deal title
@@ -16,6 +17,7 @@ type Deal struct {
 
 }
 
+// Deals can optionally define a set of options.
 type DealOption struct {
 	Title                    string  // Deal option title
 	Purchase_url             string  // Deal option url for purchase
@@ -27,6 +29,7 @@ type DealOption struct {
 	Remaining_count          float32 // The remaining deal options available for purchase (optional: this field is only present if the deal is limited)
 }
 
+// Businesses may offer a set of gift certificates.
 type GiftCertificate struct {
 	Id              string                   // Gift certificate identifier
 	Url             string                   // Gift certificate landing page url
@@ -36,11 +39,13 @@ type GiftCertificate struct {
 	Options         []GiftCertificateOptions //	Gift certificate options
 }
 
+// Gift certificates can define a set of pricing options.
 type GiftCertificateOptions struct {
 	Price           float32 //	Gift certificate option price (in cents)
 	Formatted_price string  //	Gift certificate option price (formatted, e.g. "$50")
 }
 
+// Businesses (when queried using the Business API) may contain a list of user reviews.
 type Review struct {
 	Id                     string  // Review identifier
 	Rating                 float32 // Rating from 1-5
@@ -52,22 +57,20 @@ type Review struct {
 	User                   User    // User who wrote the review
 }
 
+// Users are linked off of reviews.
 type User struct {
 	Id        string // User identifier
 	Image_url string // User profile image url
 	Name      string // User name
 }
 
-type Category struct {
-	Name  string
-	Alias string
-}
-
+// Coordinates are used with location information.
 type Coordinate struct {
 	Latitude  float32 // Latitude of current location
 	Longitude float32 // Longitude of current location
 }
 
+// Location information defines the location of a given business.
 type Location struct {
 	Coordinate      Coordinate // Address for this business formatted for display. Includes all address fields, cross streets and city, state_code, etc.
 	Address         []string   // Address for this business. Only includes address fields.
@@ -81,6 +84,7 @@ type Location struct {
 	Geo_accuracy    float32
 }
 
+// Business information is returned in full from the business API, or shallow from the search API.
 type Business struct {
 	Id                   string            // Yelp ID for this business
 	Name                 string            // Name of this business

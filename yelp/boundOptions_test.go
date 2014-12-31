@@ -4,9 +4,7 @@ import (
 	"testing"
 )
 
-/**
- * Check using location options with bounding coordinates
- */
+// Check using location options with bounding coordinates
 func TestBoundOptions(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{

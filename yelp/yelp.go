@@ -1,3 +1,5 @@
+// go-yelp provides a lightweight wrapper around the Yelp REST API.  It supports authentication with
+// OAuth 1.0, the Search API, and the Business API.
 package yelp
 
 import (
@@ -15,25 +17,27 @@ const (
 	BUSINESS_AREA = "/v2/business"
 	SEARCH_AREA   = "/v2/search"
 
-	ERROR_UNSPECIFIED_LOCATION = "You must provide a location for the search."
-	ERROR_BUSINESS_NOT_FOUND   = "The business could not be found."
+	ERROR_UNSPECIFIED_LOCATION = "you must provide a location for the search"
+	ERROR_BUSINESS_NOT_FOUND   = "the business could not be found"
 )
 
+// AuthOptions provide keys required for using the Yelp API.  Find more
+// information here:  http://www.yelp.com/developers/documentation.
 type AuthOptions struct {
-	ConsumerKey       string
-	ConsumerSecret    string
-	AccessToken       string
-	AccessTokenSecret string
+	ConsumerKey       string // Consumer Key from the yelp API access site.
+	ConsumerSecret    string // Consumer Secret from the yelp API access site.
+	AccessToken       string // Token from the yelp API access site.
+	AccessTokenSecret string // Token Secret from the yelp API access site.
 }
 
+// All searches are performed from an instance of a client.  It is the top level
+// object used to perform a search or business query.  Client objects should be
+// created through the createClient API.
 type Client struct {
 	options AuthOptions
 }
 
-/**
- * doSimpleSearch
- * Perform a simple search with a term and location.
- */
+// Perform a simple search with a term and location.
 func (client *Client) doSimpleSearch(term, location string) (result SearchResult, err error) {
 
 	// verify the term and location are not empty
@@ -61,10 +65,7 @@ func (client *Client) doSimpleSearch(term, location string) (result SearchResult
 	return result, nil
 }
 
-/**
- * doSearch
- * Perform a complex search with full search options.
- */
+// Perform a complex search with full search options.
 func (client *Client) doSearch(options SearchOptions) (result SearchResult, err error) {
 
 	// get the options from the search provider
@@ -87,10 +88,7 @@ func (client *Client) doSearch(options SearchOptions) (result SearchResult, err 
 	return result, nil
 }
 
-/**
- * getBusiness
- * Get a single business by name.
- */
+// Get a single business by name.
 func (client *Client) getBusiness(name string) (result Business, err error) {
 	rawResult, statusCode, err := client.makeRequest(BUSINESS_AREA, name, nil)
 	if err != nil {
@@ -107,10 +105,7 @@ func (client *Client) getBusiness(name string) (result Business, err error) {
 	return result, nil
 }
 
-/**
- * makeRequest
- * Internal API used to make underlying requests to the Yelp API.
- */
+// Internal/private API used to make underlying requests to the Yelp API.
 func (client *Client) makeRequest(area string, id string, params map[string]string) (result []byte, statusCode int, err error) {
 
 	// get the base url

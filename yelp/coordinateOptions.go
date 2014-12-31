@@ -3,13 +3,12 @@ package yelp
 import (
 	"errors"
 	"fmt"
+
 	"github.com/guregu/null"
 )
 
-/**
- * The geographic coordinate format is defined as:
- * ll=latitude,longitude,accuracy,altitude,altitude_accuracy
- */
+// The geographic coordinate format is defined as:
+// ll=latitude,longitude,accuracy,altitude,altitude_accuracy
 type CoordinateOptions struct {
 	Latitude          null.Float // Latitude of geo-point to search near (required)
 	Longitude         null.Float // Longitude of geo-point to search near (required)
@@ -18,6 +17,9 @@ type CoordinateOptions struct {
 	Altitude_accuracy null.Float // Accuracy of altitude (optional)
 }
 
+// The GetParameters method will reflect over the values of the given
+// struct, and provide a type appropriate set of querystring parameters
+// that match the defined values.
 func (o CoordinateOptions) GetParameters() (params map[string]string, err error) {
 	// coordinate requires at least a latitude and longitude - others are option
 	if !o.Latitude.Valid || !o.Longitude.Valid {

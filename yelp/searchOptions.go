@@ -6,15 +6,15 @@ import (
 	"reflect"
 )
 
+// All search option interfaces provide information that allows for easily mapping
+// to querystring parameters for the search query.
 type OptionProvider interface {
 	GetParameters() (params map[string]string, err error)
 }
 
-/**
- * Top level search object used for doing searches.  You can define multiple
- * sets of options, and use them together.  Only one of LocationOptions,
- * CoordinateOptions, or BoundOptions can be used at the same time.
- */
+// SearchOptions are the top level search parameters used for performing searches.
+// You can define multiple sets of options, and use them together. One (and only one) of
+// LocationOptions, CoordinateOptions, or BoundOptions can be used at the same time.
 type SearchOptions struct {
 	GeneralOptions    *GeneralOptions    // standard general search options (filters, terms, etc)
 	LocaleOptions     *LocaleOptions     // Results will be localized in the region format and language if supported.
@@ -23,10 +23,8 @@ type SearchOptions struct {
 	BoundOptions      *BoundOptions      // Use bound options (an area) to define the location.
 }
 
-/**
- * Generate a map that contains the querystring parameters for
- * all of the defined options.
- */
+// Generate a map that contains the querystring parameters for
+// all of the defined options.
 func (o *SearchOptions) GetParameters() (params map[string]string, err error) {
 
 	// ensure only one loc option provider is being used
@@ -42,10 +40,10 @@ func (o *SearchOptions) GetParameters() (params map[string]string, err error) {
 	}
 
 	if locOptionsCnt == 0 {
-		return params, errors.New("A single location search options type (Location, Coordinate, Bound) must be used.")
+		return params, errors.New("a single location search options type (Location, Coordinate, Bound) must be used")
 	}
 	if locOptionsCnt > 1 {
-		return params, errors.New("Only a single location search options type (Location, Coordinate, Bound) can be used at a time.")
+		return params, errors.New("only a single location search options type (Location, Coordinate, Bound) can be used at a time")
 	}
 	fmt.Printf("There are %v location options defined\n", locOptionsCnt)
 

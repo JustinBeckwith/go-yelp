@@ -13,13 +13,13 @@ For more information, visit the [Yelp REST API](http://www.yelp.com/developers/d
 To install go-yelp, just use the `go get` command:
 
 ```sh
-go get github.com/JustinBeckwith/go-yelp/yelp
+go get github.com/JustinBeckwith/go-yelp
 ```
 
 When you're ready to start using the API, import the reference:
 
 ```go
-import "github.com/JustinBeckwith/go-yelp/yelp"
+import "github.com/JustinBeckwith/go-yelp"
 ```
 
 ### Authentication
@@ -44,7 +44,7 @@ Keep these keys safe! There are a variety of ways to store them. I chose to stor
 The simple search API enables searching for businesses with a term and a location (ex: coffee, Seattle). After you have your keys, create a client, and make a simple query:
 
 ```go
-import "github.com/JustinBeckwith/go-yelp/yelp"
+import "github.com/JustinBeckwith/go-yelp"
 
 client := yelp.CreateClient(options)
 result, err := client.DoSimpleSearch("coffee", "seattle")

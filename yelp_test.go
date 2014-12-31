@@ -72,7 +72,7 @@ func TestSimpleSearch(t *testing.T) {
 func TestNoLocation(t *testing.T) {
 	client := getClient(t)
 	_, err := client.DoSimpleSearch("coffee", "")
-	assert(t, err.Error() == error_unspecified_location, should_require_location)
+	assert(t, err == errUnspecifiedLocation, should_require_location)
 }
 
 // Ensure you can query with no term defined and only a location.

@@ -2,7 +2,9 @@ package yelp
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
+	"os"
 	"testing"
 )
 
@@ -30,11 +32,26 @@ func assert(t *testing.T, condition bool, assertion string) {
 // Creates a client with keys in a json file, making it possible to run the
 // tests against the public Yelp API.
 func getClient(t *testing.T) Client {
-	data, err := ioutil.ReadFile("../config.json")
-	check(t, err)
+
 	var o AuthOptions
-	err = json.Unmarshal(data, &o)
-	check(t, err)
+
+	// start by looking for the keys in config.json
+	data, err := ioutil.ReadFile("../config.json")
+	if err != nil {
+		// if the file isn't there, check environment variables
+		o = AuthOptions{
+			ConsumerKey:       os.Getenv("CONSUMER_KEY"),
+			ConsumerSecret:    os.Getenv("CONSUMER_SECRET"),
+			AccessToken:       os.Getenv("ACCESS_TOKEN"),
+			AccessTokenSecret: os.Getenv("ACCESS_TOKEN_SECRET"),
+		}
+		if o.ConsumerKey == "" || o.ConsumerSecret == "" || o.AccessToken == "" || o.AccessTokenSecret == "" {
+			check(t, errors.New("to run tests, keys must be provided either in a config.json file at the root of the repo, or in environment variables"))
+		}
+	} else {
+		err = json.Unmarshal(data, &o)
+		check(t, err)
+	}
 	client := CreateClient(o)
 	return client
 }

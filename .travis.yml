@@ -1,1 +1,7 @@
 language: go
+env:
+  global:
+  - secure: UpDqff5gpQw1QJ8PIoytaGBOShMgfAZBSSkZHDGGRn87l0gl1aFdbIMy7WbmcAhoPYtPSgVQK7iD2w53QmYnYzq0lsvGt0+ZVBF258kWr2aViWOIuzjQbtpnctL2MPhWE4uJ3jJSHN/Z7QyrI/Gqdks+PoRCQVkFjhdYw9n0c+4=
+  - secure: aqeyMPTID8TR+4C7H8D2vKyXu76XFHw6UQWXU4OJB/6Fwt5R4Nw+k5XWUeFaX7wtj6VaPc5DhUprrsO/QNk2SiTJKGZCUq8RM1atDzKB1CHWG6d73Re5K0XKCcyhJE+Kq+WY0pt0stQg0/BcpCq0Q6Dkv8OkETaBxtgN3xJxIkg=
+  - secure: FDb+p4dmvQdXgMNImlYDdmlAgwes4+1OpYE+XUIkaI32DEedgNUH4lvnGy/aBt6hTqYZf8d6+dbT1cxupoJnGfLC011NLwsq8xgja71xOsIM/vRpQBiRTkNfIzeZruV30/AqLgYvMULQaOqZ4NOEFR5sTvqnW0Y4fg9Q0NH/jOs=
+  - secure: Zd3yRxnjsFWdHTwCw+50cKowfbuYcJfsXGG+EGK+GiQZp7zhmBKTydcSbdp+9pO2ZLpBTQ6OBlv5C8izfcY++1pPiA79kK1UOJFVj7aXyC3fdTK2Fs9WFP52qZiYT4eqTFs+qDsEDGvEjrcHDZuA0yxClE2monqIGTwy9fhhbVs=

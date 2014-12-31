@@ -1,5 +1,5 @@
 # go-yelp
-go-yelp is a #golang wrapper for the Yelp REST API.  It lets you do all kinds of interesting things like searching for businesses, getting user comments and ratings, and handling common errors.  The library is written Go.
+go-yelp is a #golang wrapper for the Yelp REST API. It lets you do all kinds of interesting things like searching for businesses, getting user comments and ratings, and handling common errors. The library is written Go.
 
 [![GoDoc](https://godoc.org/github.com/JustinBeckwith/go-yelp/yelp?status.svg)](https://godoc.org/github.com/JustinBeckwith/go-yelp/yelp)
 
@@ -24,11 +24,11 @@ import "github.com/JustinBeckwith/go-yelp/yelp"
 
 ### Authentication
 
-All searches are performed through a client.  To create a new client, you need provide a set of access keys neccesary to use the V2 Yelp API. You can sign up for a Yelp developer account, and access your keys here:
+All searches are performed through a client. To create a new client, you need provide a set of access keys necessary to use the V2 Yelp API. You can sign up for a Yelp developer account, and access your keys here:
 
 [Yelp | Manage Keys](http://www.yelp.com/developers/manage_api_keys)
 
-Keep these keys safe!  There are a variety of ways to store them.  I chose to store them in a config.json file which is not checked into the repository.  To run the tests, you can create your own `config.json` file:
+Keep these keys safe! There are a variety of ways to store them. I chose to store them in a config.json file which is not checked into the repository. To run the tests, you can create your own `config.json` file:
 
 ```json
 {
@@ -39,9 +39,9 @@ Keep these keys safe!  There are a variety of ways to store them.  I chose to st
 }
 ```
 
-### The search API
+### The Search API
 
-The simple search API enables searching for businesses with a term and a location (ex: coffee, seattle).  After you have your keys, create a client, and make a simple query:
+The simple search API enables searching for businesses with a term and a location (ex: coffee, Seattle). After you have your keys, create a client, and make a simple query:
 
 ```go
 import "github.com/JustinBeckwith/go-yelp/yelp"
@@ -53,7 +53,7 @@ result, err := client.DoSimpleSearch("coffee", "seattle")
 For more complex searches, the `doSearch` method allows for searching based on a combination of general search criteria, and advanced location options:
 
 ```go
-// Build an advanced set of search critera that include 
+// Build an advanced set of search criteria that include 
 // general options, and location specific options.
 options := SearchOptions{
 	GeneralOptions: &GeneralOptions{
@@ -76,7 +76,7 @@ result, err := client.DoSearch(options)
 To directly search for a business by name, use the `getBusiness` method on the client:
 
 ```go
-client := yelp.createClient(options)
+client := yelp.CreateClient(options)
 result, err := client.GetBusiness("yelp-san-francisco")
 ```
 

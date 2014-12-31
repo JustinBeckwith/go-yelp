@@ -1,6 +1,6 @@
 package yelp
 
-// Every search from the Search API returns a SearchResult, which incldues
+// Every search from the Search API returns a SearchResult, which includes
 // the region, the total number of results, and a list of matching businesses.
 // The business objects returned by this query are shallow - they will not include
 // deep results such as reviews.

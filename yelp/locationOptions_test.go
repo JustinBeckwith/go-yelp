@@ -17,7 +17,7 @@ func TestLocationOptions(t *testing.T) {
 			Location: "seattle",
 		},
 	}
-	result, err := client.doSearch(options)
+	result, err := client.DoSearch(options)
 	check(t, err)
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }
@@ -37,7 +37,7 @@ func TestLocationWithCoordinates(t *testing.T) {
 			},
 		},
 	}
-	result, err := client.doSearch(options)
+	result, err := client.DoSearch(options)
 	check(t, err)
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }

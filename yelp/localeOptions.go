@@ -7,10 +7,10 @@ type LocaleOptions struct {
 	lang string // ISO 639 language code (default=en). Reviews written in the specified language will be shown.
 }
 
-// The GetParameters method will reflect over the values of the given
+// The getParameters method will reflect over the values of the given
 // struct, and provide a type appropriate set of querystring parameters
 // that match the defined values.
-func (o *LocaleOptions) GetParameters() (params map[string]string, err error) {
+func (o *LocaleOptions) getParameters() (params map[string]string, err error) {
 	params = make(map[string]string)
 	if o.cc != "" {
 		params["cc"] = o.cc

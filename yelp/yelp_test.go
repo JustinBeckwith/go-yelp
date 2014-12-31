@@ -35,7 +35,7 @@ func getClient(t *testing.T) Client {
 	var o AuthOptions
 	err = json.Unmarshal(data, &o)
 	check(t, err)
-	client := createClient(o)
+	client := CreateClient(o)
 	return client
 }
 
@@ -46,7 +46,7 @@ func getClient(t *testing.T) Client {
 // Verify a simple search using a search term and location returns a set of results.
 func TestSimpleSearch(t *testing.T) {
 	client := getClient(t)
-	result, err := client.doSimpleSearch("coffee", "seattle")
+	result, err := client.DoSimpleSearch("coffee", "seattle")
 	check(t, err)
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }
@@ -54,14 +54,14 @@ func TestSimpleSearch(t *testing.T) {
 // Ensure validation for a missing location in the search.
 func TestNoLocation(t *testing.T) {
 	client := getClient(t)
-	_, err := client.doSimpleSearch("coffee", "")
+	_, err := client.DoSimpleSearch("coffee", "")
 	assert(t, err.Error() == ERROR_UNSPECIFIED_LOCATION, SHOULD_REQUIRE_LOCATION)
 }
 
 // Ensure you can query with no term defined and only a location.
 func TestNoTerm(t *testing.T) {
 	client := getClient(t)
-	result, err := client.doSimpleSearch("", "Seattle")
+	result, err := client.DoSimpleSearch("", "Seattle")
 	check(t, err)
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }

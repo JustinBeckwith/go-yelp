@@ -9,7 +9,7 @@ import (
 // All search option interfaces provide information that allows for easily mapping
 // to querystring parameters for the search query.
 type OptionProvider interface {
-	GetParameters() (params map[string]string, err error)
+	getParameters() (params map[string]string, err error)
 }
 
 // SearchOptions are the top level search parameters used for performing searches.
@@ -25,7 +25,7 @@ type SearchOptions struct {
 
 // Generate a map that contains the querystring parameters for
 // all of the defined options.
-func (o *SearchOptions) GetParameters() (params map[string]string, err error) {
+func (o *SearchOptions) getParameters() (params map[string]string, err error) {
 
 	// ensure only one loc option provider is being used
 	locOptionsCnt := 0
@@ -55,7 +55,7 @@ func (o *SearchOptions) GetParameters() (params map[string]string, err error) {
 	for i := 0; i < val.NumField(); i++ {
 		if !val.Field(i).IsNil() {
 			o := val.Field(i).Interface().(OptionProvider)
-			fieldParams, err := o.GetParameters()
+			fieldParams, err := o.getParameters()
 			if err != nil {
 				return params, err
 			}

@@ -17,7 +17,7 @@ func TestGeneralOptions(t *testing.T) {
 			Location: "seattle",
 		},
 	}
-	result, err := client.doSearch(options)
+	result, err := client.DoSearch(options)
 	check(t, err)
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }
@@ -33,7 +33,7 @@ func TestUnescapedCharactersInGeneralOptions(t *testing.T) {
 			Location: "60173",
 		},
 	}
-	result, err := client.doSearch(options)
+	result, err := client.DoSearch(options)
 	check(t, err)
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }
@@ -49,7 +49,7 @@ func TestMultipleCategories(t *testing.T) {
 			Location: "Seattle",
 		},
 	}
-	result, err := client.doSearch(options)
+	result, err := client.DoSearch(options)
 	check(t, err)
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }
@@ -66,7 +66,7 @@ func TestLimit(t *testing.T) {
 			Location: "Seattle",
 		},
 	}
-	result, err := client.doSearch(options)
+	result, err := client.DoSearch(options)
 	check(t, err)
 	assert(t, len(result.Businesses) == 15, "There should be 15 results.")
 }

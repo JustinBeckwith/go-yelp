@@ -17,10 +17,10 @@ type CoordinateOptions struct {
 	Altitude_accuracy null.Float // Accuracy of altitude (optional)
 }
 
-// The GetParameters method will reflect over the values of the given
+// The getParameters method will reflect over the values of the given
 // struct, and provide a type appropriate set of querystring parameters
 // that match the defined values.
-func (o CoordinateOptions) GetParameters() (params map[string]string, err error) {
+func (o CoordinateOptions) getParameters() (params map[string]string, err error) {
 	// coordinate requires at least a latitude and longitude - others are option
 	if !o.Latitude.Valid || !o.Longitude.Valid {
 		return nil, errors.New("latitude and longitude are required fields for a coordinate based search")

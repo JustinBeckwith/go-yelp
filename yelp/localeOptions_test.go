@@ -19,7 +19,7 @@ func TestLocaleOptions(t *testing.T) {
 			lang: "en",
 		},
 	}
-	result, err := client.doSearch(options)
+	result, err := client.DoSearch(options)
 	check(t, err)
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }

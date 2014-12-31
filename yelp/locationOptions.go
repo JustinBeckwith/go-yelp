@@ -13,10 +13,10 @@ type LocationOptions struct {
 	CoordinateOptions *CoordinateOptions // An optional latitude, longitude parameter can also be specified as a hint to the geocoder to disambiguate the location text. The format for this is defined as:   ?cll=latitude,longitude
 }
 
-// The GetParameters method will reflect over the values of the given
+// The getParameters method will reflect over the values of the given
 // struct, and provide a type appropriate set of querystring parameters
 // that match the defined values.
-func (o *LocationOptions) GetParameters() (params map[string]string, err error) {
+func (o *LocationOptions) getParameters() (params map[string]string, err error) {
 	params = make(map[string]string)
 
 	// location is a required field

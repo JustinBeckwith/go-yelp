@@ -16,10 +16,10 @@ type BoundOptions struct {
 	Ne_longitude float32 // Northeast longitude of bounding box
 }
 
-// The GetParameters method will reflect over the values of the given
+// The getParameters method will reflect over the values of the given
 // struct, and provide a type appropriate set of querystring parameters
 // that match the defined values.
-func (o BoundOptions) GetParameters() (params map[string]string, err error) {
+func (o BoundOptions) getParameters() (params map[string]string, err error) {
 	return map[string]string{
 		"bounds": fmt.Sprintf("%v,%v|%v,%v",
 			o.Sw_latitude,

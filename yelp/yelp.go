@@ -34,11 +34,11 @@ type AuthOptions struct {
 // object used to perform a search or business query.  Client objects should be
 // created through the createClient API.
 type Client struct {
-	options AuthOptions
+	Options AuthOptions
 }
 
 // Perform a simple search with a term and location.
-func (client *Client) doSimpleSearch(term, location string) (result SearchResult, err error) {
+func (client *Client) DoSimpleSearch(term, location string) (result SearchResult, err error) {
 
 	// verify the term and location are not empty
 	if location == "" {
@@ -66,10 +66,10 @@ func (client *Client) doSimpleSearch(term, location string) (result SearchResult
 }
 
 // Perform a complex search with full search options.
-func (client *Client) doSearch(options SearchOptions) (result SearchResult, err error) {
+func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err error) {
 
 	// get the options from the search provider
-	params, err := options.GetParameters()
+	params, err := options.getParameters()
 	if err != nil {
 		return SearchResult{}, err
 	}
@@ -89,7 +89,7 @@ func (client *Client) doSearch(options SearchOptions) (result SearchResult, err 
 }
 
 // Get a single business by name.
-func (client *Client) getBusiness(name string) (result Business, err error) {
+func (client *Client) GetBusiness(name string) (result Business, err error) {
 	rawResult, statusCode, err := client.makeRequest(BUSINESS_AREA, name, nil)
 	if err != nil {
 		if statusCode == 404 {
@@ -123,16 +123,16 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 
 	// set up OAUTH
 	c := oauth.NewConsumer(
-		client.options.ConsumerKey,
-		client.options.ConsumerSecret,
+		client.Options.ConsumerKey,
+		client.Options.ConsumerSecret,
 		oauth.ServiceProvider{
 			RequestTokenUrl:   "",
 			AuthorizeTokenUrl: "",
 			AccessTokenUrl:    "",
 		})
 	token := &oauth.AccessToken{
-		client.options.AccessToken,
-		client.options.AccessTokenSecret,
+		client.Options.AccessToken,
+		client.Options.AccessTokenSecret,
 		make(map[string]string),
 	}
 
@@ -161,6 +161,6 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 }
 
 // Create a new yelp search client.  All search operations should go through this API.
-func createClient(options AuthOptions) Client {
+func CreateClient(options AuthOptions) Client {
 	return Client{options}
 }

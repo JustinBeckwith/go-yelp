@@ -18,7 +18,7 @@ func TestCoordinateOptions(t *testing.T) {
 			null.FloatFromPtr(nil),
 		},
 	}
-	result, err := client.doSearch(options)
+	result, err := client.DoSearch(options)
 	check(t, err)
 	assert(t, len(result.Businesses) > 0, CONTAINS_RESULTS)
 }

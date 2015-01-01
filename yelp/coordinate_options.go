@@ -7,7 +7,7 @@ import (
 	"github.com/guregu/null"
 )
 
-// CoorindateOptions are used with complex searches for locations.
+// CoordinateOptions are used with complex searches for locations.
 // The geographic coordinate format is defined as:
 // ll=latitude,longitude,accuracy,altitude,altitude_accuracy
 type CoordinateOptions struct {

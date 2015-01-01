@@ -30,10 +30,10 @@ type Center struct {
 
 // Deal defines a set of special offerings from the business.
 type Deal struct {
-	Id                     string       // Deal identifier
+	ID                     string       // Deal identifier
 	Title                  string       // Deal title
-	Url                    string       // Deal url
-	ImageUrl               string       `json:"image_url"`               // Deal image url
+	URL                    string       // Deal URL
+	ImageURL               string       `json:"image_URL"`               // Deal image URL
 	CurrencyCode           string       `json:"currency_code"`           // ISO_4217 Currency Code
 	TimeStart              float32      `json:"time_start"`              // Deal start time (Unix timestamp)
 	TimeEnd                float32      `json:"time_end"`                // Deal end time (optional: this field is present only if the Deal ends)
@@ -45,10 +45,10 @@ type Deal struct {
 
 }
 
-// DealOptions are optionally included on a deal.
+// DealOption provides options are optionally included on a deal.
 type DealOption struct {
 	Title                  string  // Deal option title
-	PurchaseUrl            string  `json:"Purchase_url"` // Deal option url for purchase
+	PurchaseURL            string  `json:"Purchase_URL"` // Deal option URL for purchase
 	Price                  float32 // Deal option price (in cents)
 	FormattedPrice         string  `json:"Formatted_price"`          // Deal option price (formatted, e.g. "$6")
 	OriginalPrice          float32 `json:"Original_price"`           // Deal option original price (in cents)
@@ -59,9 +59,9 @@ type DealOption struct {
 
 // GiftCertificate defines optional data available on Businesses.
 type GiftCertificate struct {
-	Id             string                   // Gift certificate identifier
-	Url            string                   // Gift certificate landing page url
-	ImageUrl       string                   `json:"Image_url"`       //	Gift certificate image url
+	ID             string                   // Gift certificate identifier
+	URL            string                   // Gift certificate landing page URL
+	ImageURL       string                   `json:"Image_URL"`       //	Gift certificate image URL
 	CurrencyCode   string                   `json:"Currency_code"`   // ISO_4217 Currency Code
 	UnusedBalances string                   `json:"Unused_balances"` // Whether unused balances are returned as cash or store credit
 	Options        []GiftCertificateOptions //	Gift certificate options
@@ -75,11 +75,11 @@ type GiftCertificateOptions struct {
 
 // Review data contains a list of user reviews for a given Business (when queried using the Business API).
 type Review struct {
-	Id                  string  // Review identifier
+	ID                  string  // Review identifier
 	Rating              float32 // Rating from 1-5
-	RatingImageUrl      string  `json:"Rating_image_url"`       // URL to star rating image for this business (size = 84x17)
-	RatingImageSmallUrl string  `json:"Rating_image_small_url"` // URL to small version of rating image for this business (size = 50x10)
-	RatingImageLargeUrl string  `json:"Rating_image_large_url"` // URL to large version of rating image for this business (size = 166x30)
+	RatingImageURL      string  `json:"Rating_image_URL"`       // URL to star rating image for this business (size = 84x17)
+	RatingImageSmallURL string  `json:"Rating_image_small_URL"` // URL to small version of rating image for this business (size = 50x10)
+	RatingImageLargeURL string  `json:"Rating_image_large_URL"` // URL to large version of rating image for this business (size = 166x30)
 	Excerpt             string  // Review excerpt
 	TimeCreated         float32 `json:"Time_created"` // Time created (Unix timestamp)
 	User                User    // User who wrote the review
@@ -87,8 +87,8 @@ type Review struct {
 
 // User data is linked off of reviews.
 type User struct {
-	Id       string // User identifier
-	ImageUrl string `json:"Image_url"` // User profile image url
+	ID       string // User identifier
+	ImageURL string `json:"Image_URL"` // User profile image URL
 	Name     string // User name
 }
 
@@ -114,22 +114,22 @@ type Location struct {
 
 // Business information is returned in full from the business API, or shallow from the search API.
 type Business struct {
-	Id                string            // Yelp ID for this business
+	ID                string            // Yelp ID for this business
 	Name              string            // Name of this business
-	ImageUrl          string            `json:"Image_url"` // URL of photo for this business
-	Url               string            // URL for business page on Yelp
-	MobileUrl         string            `json:"Mobile_url"` // URL for mobile business page on Yelp
+	ImageURL          string            `json:"Image_URL"` // URL of photo for this business
+	URL               string            // URL for business page on Yelp
+	MobileURL         string            `json:"Mobile_URL"` // URL for mobile business page on Yelp
 	Phone             string            // Phone number for this business with international dialing code (e.g. +442079460000)
 	DisplayPhone      string            `json:"Display_phone"` // Phone number for this business formatted for display
 	ReviewCount       int               `json:"Review_count"`  // Number of reviews for this business
 	Categories        [][]string        // Provides a list of category name, alias pairs that this business is associated with. The alias is provided so you can search with the category_filter.
 	Distance          float32           // Distance that business is from search location in meters, if a latitude/longitude is specified.
 	Rating            float32           // Rating for this business (value ranges from 1, 1.5, ... 4.5, 5)
-	RatingImgUrl      string            `json:"Rating_img_url"`       // URL to star rating image for this business (size = 84x17)
-	RatingImgUrlSmall string            `json:"Rating_img_url_small"` // URL to small version of rating image for this business (size = 50x10)
-	RatingImgUrlLarge string            `json:"Rating_img_url_large"` // URL to large version of rating image for this business (size = 166x30)
+	RatingImgURL      string            `json:"Rating_img_URL"`       // URL to star rating image for this business (size = 84x17)
+	RatingImgURLSmall string            `json:"Rating_img_URL_small"` // URL to small version of rating image for this business (size = 50x10)
+	RatingImgURLLarge string            `json:"Rating_img_URL_large"` // URL to large version of rating image for this business (size = 166x30)
 	SnippetText       string            `json:"Snippet_text"`         // Snippet text associated with this business
-	SnippetImageUrl   string            `json:"Snippet_image_url"`    // URL of snippet image associated with this business
+	SnippetImageURL   string            `json:"Snippet_image_URL"`    // URL of snippet image associated with this business
 	Location          Location          // Location data for this business
 	IsClaimed         bool              `json:"Is_claimed"`        // Whether business has been claimed by a business owner
 	IsClosed          bool              `json:"Is_closed"`         // Whether business has been (permanently) closed

@@ -6,8 +6,8 @@ import (
 	"reflect"
 )
 
-// All search option interfaces provide information that allows for easily mapping
-// to querystring parameters for the search query.
+// OptionProvider provides a base level interface which all search option interfaces implement.
+// It provides information that allows for easily mapping to querystring parameters for the search query.
 type OptionProvider interface {
 	getParameters() (params map[string]string, err error)
 }

@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	rootUri      = "http://api.yelp.com/"
+	rootURI      = "http://api.yelp.com/"
 	businessArea = "/v2/business"
 	searchArea   = "/v2/search"
 )
@@ -111,16 +111,16 @@ func (client *Client) GetBusiness(name string) (result Business, err error) {
 func (client *Client) makeRequest(area string, id string, params map[string]string) (result []byte, statusCode int, err error) {
 
 	// get the base url
-	queryUri, err := url.Parse(rootUri)
+	queryURI, err := url.Parse(rootURI)
 	if err != nil {
 		return nil, 0, err
 	}
 
 	// add the type of request we're making (search|business)
-	queryUri.Path = area
+	queryURI.Path = area
 
 	if id != "" {
-		queryUri.Path += "/" + id
+		queryURI.Path += "/" + id
 	}
 
 	// set up OAUTH
@@ -139,7 +139,7 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 	}
 
 	// make the request using the oauth lib
-	response, err := c.Get(queryUri.String(), params, token)
+	response, err := c.Get(queryURI.String(), params, token)
 
 	// always log the url, and close the request when done
 	fmt.Printf("%v\n", response.Request.URL.String())

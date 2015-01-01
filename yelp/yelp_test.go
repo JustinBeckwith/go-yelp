@@ -36,7 +36,7 @@ func getClient(t *testing.T) Client {
 	var o AuthOptions
 
 	// start by looking for the keys in config.json
-	data, err := ioutil.ReadFile("config.json")
+	data, err := ioutil.ReadFile("../config.json")
 	if err != nil {
 		// if the file isn't there, check environment variables
 		o = AuthOptions{

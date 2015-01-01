@@ -1,7 +1,7 @@
 # go-yelp
 go-yelp is a #golang wrapper for the Yelp REST API. It lets you do all kinds of interesting things like searching for businesses, getting user comments and ratings, and handling common errors. The library is written Go.
 
-[![GoDoc](https://godoc.org/github.com/JustinBeckwith/go-yelp?status.svg)](https://godoc.org/github.com/JustinBeckwith/go-yelp)
+[![GoDoc](https://godoc.org/github.com/JustinBeckwith/go-yelp/yelp?status.svg)](https://godoc.org/github.com/JustinBeckwith/go-yelp/yelp)
 
 [![Build Status](https://travis-ci.org/JustinBeckwith/go-yelp.svg?branch=master)](https://travis-ci.org/JustinBeckwith/go-yelp)
 
@@ -13,13 +13,13 @@ For more information, visit the [Yelp REST API](http://www.yelp.com/developers/d
 To install go-yelp, just use the `go get` command:
 
 ```sh
-go get github.com/JustinBeckwith/go-yelp
+go get github.com/JustinBeckwith/go-yelp/yelp
 ```
 
 When you're ready to start using the API, import the reference:
 
 ```go
-import "github.com/JustinBeckwith/go-yelp"
+import "github.com/JustinBeckwith/go-yelp/yelp"
 ```
 
 ### Authentication
@@ -44,7 +44,7 @@ Keep these keys safe! There are a variety of ways to store them. I chose to stor
 The simple search API enables searching for businesses with a term and a location (ex: coffee, Seattle). After you have your keys, create a client, and make a simple query:
 
 ```go
-import "github.com/JustinBeckwith/go-yelp"
+import "github.com/JustinBeckwith/go-yelp/yelp"
 
 client := yelp.New(options)
 result, err := client.DoSimpleSearch("coffee", "seattle")

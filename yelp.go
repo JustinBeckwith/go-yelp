@@ -16,9 +16,11 @@ const (
 	root_uri      = "http://api.yelp.com/"
 	business_area = "/v2/business"
 	search_area   = "/v2/search"
+)
 
-	error_unspecified_location = "you must provide a location for the search"
-	error_business_not_found   = "the business could not be found"
+var (
+	errUnspecifiedLocation = errors.New("location must be specified")
+	errBusinessNotFound    = errors.New("business not found")
 )
 
 // AuthOptions provide keys required for using the Yelp API.  Find more
@@ -42,7 +44,7 @@ func (client *Client) DoSimpleSearch(term, location string) (result SearchResult
 
 	// verify the term and location are not empty
 	if location == "" {
-		return SearchResult{}, errors.New(error_unspecified_location)
+		return SearchResult{}, errUnspecifiedLocation
 	}
 
 	// set up the query options
@@ -93,7 +95,7 @@ func (client *Client) GetBusiness(name string) (result Business, err error) {
 	rawResult, statusCode, err := client.makeRequest(business_area, name, nil)
 	if err != nil {
 		if statusCode == 404 {
-			return Business{}, errors.New(error_business_not_found)
+			return Business{}, errBusinessNotFound
 		}
 		return Business{}, err
 	}

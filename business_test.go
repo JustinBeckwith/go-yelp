@@ -16,5 +16,5 @@ func TestBusinessSearch(t *testing.T) {
 func TestNonExistingBusinessSearch(t *testing.T) {
 	client := getClient(t)
 	_, err := client.GetBusiness("place-that-doesnt-exist")
-	assert(t, err.Error() == error_business_not_found, "Searching for a non-existent business should return a 404 error")
+	assert(t, err == errBusinessNotFound, "Searching for a non-existent business should return a 404 error")
 }

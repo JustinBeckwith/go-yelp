@@ -9,7 +9,7 @@ func TestBusinessSearch(t *testing.T) {
 	client := getClient(t)
 	result, err := client.GetBusiness("yelp-san-francisco")
 	check(t, err)
-	assert(t, result.Name != "", contains_results)
+	assert(t, result.Name != "", containsResults)
 }
 
 // TestNonExistingBusinessSearch will verify searching for a non-existent business throws the right error.

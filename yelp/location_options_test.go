@@ -19,7 +19,7 @@ func TestLocationOptions(t *testing.T) {
 	}
 	result, err := client.DoSearch(options)
 	check(t, err)
-	assert(t, len(result.Businesses) > 0, contains_results)
+	assert(t, len(result.Businesses) > 0, containsResults)
 }
 
 // TestLocationWithCoordinates will check using location options with bounding coordinates.
@@ -39,5 +39,5 @@ func TestLocationWithCoordinates(t *testing.T) {
 	}
 	result, err := client.DoSearch(options)
 	check(t, err)
-	assert(t, len(result.Businesses) > 0, contains_results)
+	assert(t, len(result.Businesses) > 0, containsResults)
 }

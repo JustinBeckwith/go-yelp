@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	contains_results        string = "The query returns at least one result."
-	should_require_location string = "The query should require a location."
+	containsResults       string = "The query returns at least one result."
+	shouldRequireLocation string = "The query should require a location."
 )
 
 // Check an error result for a value.  If present, fail the test with
@@ -65,14 +65,19 @@ func TestSimpleSearch(t *testing.T) {
 	client := getClient(t)
 	result, err := client.DoSimpleSearch("coffee", "seattle")
 	check(t, err)
-	assert(t, len(result.Businesses) > 0, contains_results)
+	assert(t, len(result.Businesses) > 0, containsResults)
+
+	// verify basic fields are returned
+	assert(t, result.Region.Span.LatitudeDelta != 0, "latitude is returned")
+	assert(t, result.Region.Span.LongitudeDelta != 0, "longitude is returned")
+
 }
 
 // TestNoLocation ensures validation for a missing location in the search.
 func TestNoLocation(t *testing.T) {
 	client := getClient(t)
 	_, err := client.DoSimpleSearch("coffee", "")
-	assert(t, err == errUnspecifiedLocation, should_require_location)
+	assert(t, err == errUnspecifiedLocation, shouldRequireLocation)
 }
 
 // TestNoTerm ensures you can query with no term defined and only a location.
@@ -80,5 +85,5 @@ func TestNoTerm(t *testing.T) {
 	client := getClient(t)
 	result, err := client.DoSimpleSearch("", "Seattle")
 	check(t, err)
-	assert(t, len(result.Businesses) > 0, contains_results)
+	assert(t, len(result.Businesses) > 0, containsResults)
 }

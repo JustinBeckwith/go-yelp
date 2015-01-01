@@ -13,9 +13,9 @@ import (
 )
 
 const (
-	root_uri      = "http://api.yelp.com/"
-	business_area = "/v2/business"
-	search_area   = "/v2/search"
+	rootUri      = "http://api.yelp.com/"
+	businessArea = "/v2/business"
+	searchArea   = "/v2/search"
 )
 
 var (
@@ -54,7 +54,7 @@ func (client *Client) DoSimpleSearch(term, location string) (result SearchResult
 	}
 
 	// perform the search request
-	rawResult, _, err := client.makeRequest(search_area, "", params)
+	rawResult, _, err := client.makeRequest(searchArea, "", params)
 	if err != nil {
 		return SearchResult{}, err
 	}
@@ -77,7 +77,7 @@ func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err 
 	}
 
 	// perform the search request
-	rawResult, _, err := client.makeRequest(search_area, "", params)
+	rawResult, _, err := client.makeRequest(searchArea, "", params)
 	if err != nil {
 		return SearchResult{}, err
 	}
@@ -92,7 +92,7 @@ func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err 
 
 // GetBusiness obtains a single business by name.
 func (client *Client) GetBusiness(name string) (result Business, err error) {
-	rawResult, statusCode, err := client.makeRequest(business_area, name, nil)
+	rawResult, statusCode, err := client.makeRequest(businessArea, name, nil)
 	if err != nil {
 		if statusCode == 404 {
 			return Business{}, errBusinessNotFound
@@ -111,7 +111,7 @@ func (client *Client) GetBusiness(name string) (result Business, err error) {
 func (client *Client) makeRequest(area string, id string, params map[string]string) (result []byte, statusCode int, err error) {
 
 	// get the base url
-	queryUri, err := url.Parse(root_uri)
+	queryUri, err := url.Parse(rootUri)
 	if err != nil {
 		return nil, 0, err
 	}

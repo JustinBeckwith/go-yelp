@@ -11,11 +11,11 @@ import (
 // The geographic coordinate format is defined as:
 // ll=latitude,longitude,accuracy,altitude,altitude_accuracy
 type CoordinateOptions struct {
-	Latitude          null.Float // Latitude of geo-point to search near (required)
-	Longitude         null.Float // Longitude of geo-point to search near (required)
-	Accuracy          null.Float // Accuracy of latitude, longitude (optional)
-	Altitude          null.Float // Altitude (optional)
-	Altitude_accuracy null.Float // Accuracy of altitude (optional)
+	Latitude         null.Float // Latitude of geo-point to search near (required)
+	Longitude        null.Float // Longitude of geo-point to search near (required)
+	Accuracy         null.Float // Accuracy of latitude, longitude (optional)
+	Altitude         null.Float // Altitude (optional)
+	AltitudeAccuracy null.Float // Accuracy of altitude (optional)
 }
 
 // getParameters will reflect over the values of the given
@@ -34,8 +34,8 @@ func (o CoordinateOptions) getParameters() (params map[string]string, err error)
 	if o.Altitude.Valid {
 		ll += fmt.Sprintf(",%v", o.Altitude.Float64)
 	}
-	if o.Altitude_accuracy.Valid {
-		ll += fmt.Sprintf(",%v", o.Altitude_accuracy.Float64)
+	if o.AltitudeAccuracy.Valid {
+		ll += fmt.Sprintf(",%v", o.AltitudeAccuracy.Float64)
 	}
 
 	return map[string]string{

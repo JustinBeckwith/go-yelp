@@ -19,7 +19,7 @@ func TestGeneralOptions(t *testing.T) {
 	}
 	result, err := client.DoSearch(options)
 	check(t, err)
-	assert(t, len(result.Businesses) > 0, contains_results)
+	assert(t, len(result.Businesses) > 0, containsResults)
 }
 
 // TestUnescapedCharactersInGeneralOptions verify URL escaped characters do not cause search to fail.
@@ -35,7 +35,7 @@ func TestUnescapedCharactersInGeneralOptions(t *testing.T) {
 	}
 	result, err := client.DoSearch(options)
 	check(t, err)
-	assert(t, len(result.Businesses) > 0, contains_results)
+	assert(t, len(result.Businesses) > 0, containsResults)
 }
 
 // TestMultipleCategories will perform a search with multiple categories on the general options filter.
@@ -43,7 +43,7 @@ func TestMultipleCategories(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{
 		GeneralOptions: &GeneralOptions{
-			Category_filter: "climbing,bowling",
+			CategoryFilter: "climbing,bowling",
 		},
 		LocationOptions: &LocationOptions{
 			Location: "Seattle",
@@ -51,7 +51,7 @@ func TestMultipleCategories(t *testing.T) {
 	}
 	result, err := client.DoSearch(options)
 	check(t, err)
-	assert(t, len(result.Businesses) > 0, contains_results)
+	assert(t, len(result.Businesses) > 0, containsResults)
 }
 
 // TestLimit verify the limit parameter works as expected.

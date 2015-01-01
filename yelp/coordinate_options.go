@@ -7,6 +7,7 @@ import (
 	"github.com/guregu/null"
 )
 
+// CoorindateOptions are used with complex searches for locations.
 // The geographic coordinate format is defined as:
 // ll=latitude,longitude,accuracy,altitude,altitude_accuracy
 type CoordinateOptions struct {
@@ -17,7 +18,7 @@ type CoordinateOptions struct {
 	Altitude_accuracy null.Float // Accuracy of altitude (optional)
 }
 
-// The getParameters method will reflect over the values of the given
+// getParameters will reflect over the values of the given
 // struct, and provide a type appropriate set of querystring parameters
 // that match the defined values.
 func (o CoordinateOptions) getParameters() (params map[string]string, err error) {

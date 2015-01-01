@@ -21,7 +21,7 @@ func check(t *testing.T, e error) {
 	}
 }
 
-// Provide a simple way to verify an assertion, and fail the test
+// assert provides a simple way to verify an assertion, and fail the test
 // if that assertion fails.
 func assert(t *testing.T, condition bool, assertion string) {
 	if !condition {
@@ -29,7 +29,7 @@ func assert(t *testing.T, condition bool, assertion string) {
 	}
 }
 
-// Creates a client with keys in a json file, making it possible to run the
+// getClient creates a client with keys in a json file, making it possible to run the
 // tests against the public Yelp API.
 func getClient(t *testing.T) Client {
 
@@ -60,7 +60,7 @@ func getClient(t *testing.T) Client {
 // TESTS
 //
 
-// Verify a simple search using a search term and location returns a set of results.
+// TestSimpleSearch verifies a simple search using a search term and location returns a set of results.
 func TestSimpleSearch(t *testing.T) {
 	client := getClient(t)
 	result, err := client.DoSimpleSearch("coffee", "seattle")
@@ -68,14 +68,14 @@ func TestSimpleSearch(t *testing.T) {
 	assert(t, len(result.Businesses) > 0, contains_results)
 }
 
-// Ensure validation for a missing location in the search.
+// TestNoLocation ensures validation for a missing location in the search.
 func TestNoLocation(t *testing.T) {
 	client := getClient(t)
 	_, err := client.DoSimpleSearch("coffee", "")
 	assert(t, err == errUnspecifiedLocation, should_require_location)
 }
 
-// Ensure you can query with no term defined and only a location.
+// TestNoTerm ensures you can query with no term defined and only a location.
 func TestNoTerm(t *testing.T) {
 	client := getClient(t)
 	result, err := client.DoSimpleSearch("", "Seattle")

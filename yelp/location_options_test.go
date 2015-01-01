@@ -6,7 +6,7 @@ import (
 	"github.com/guregu/null"
 )
 
-// Check using location options by term.
+// TestLocationOptions will check using location options by term.
 func TestLocationOptions(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{
@@ -22,7 +22,7 @@ func TestLocationOptions(t *testing.T) {
 	assert(t, len(result.Businesses) > 0, contains_results)
 }
 
-// Check using location options with bounding coordinates.
+// TestLocationWithCoordinates will check using location options with bounding coordinates.
 func TestLocationWithCoordinates(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{

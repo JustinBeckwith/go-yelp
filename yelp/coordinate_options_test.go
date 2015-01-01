@@ -6,7 +6,7 @@ import (
 	"github.com/guregu/null"
 )
 
-// Check using location options with bounding coordinates.
+// TestCoordinateOptions will check using location options with bounding coordinates.
 func TestCoordinateOptions(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{

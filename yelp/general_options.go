@@ -18,7 +18,7 @@ type GeneralOptions struct {
 	Deals_filter    null.Bool  // Whether to exclusively search for businesses with deals
 }
 
-// The getParameters method will reflect over the values of the given
+// getParameters will reflect over the values of the given
 // struct, and provide a type appropriate set of querystring parameters
 // that match the defined values.
 func (o *GeneralOptions) getParameters() (params map[string]string, err error) {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// The BoundOptions type provides a way to describe a location that uses a set of coordinates.
+// BoundOptions provides a way to describe a location that uses a set of coordinates.
 // Location is specified by a bounding box, defined by a southwest latitude/longitude and a
 // northeast latitude/longitude geographic coordinate.
 // The bounding box format is defined as:
@@ -16,9 +16,8 @@ type BoundOptions struct {
 	Ne_longitude float32 // Northeast longitude of bounding box
 }
 
-// The getParameters method will reflect over the values of the given
-// struct, and provide a type appropriate set of querystring parameters
-// that match the defined values.
+// getParameters will reflect over the values of the given struct, and provide a type
+// appropriate set of querystring parameters that match the defined values.
 func (o BoundOptions) getParameters() (params map[string]string, err error) {
 	return map[string]string{
 		"bounds": fmt.Sprintf("%v,%v|%v,%v",

@@ -6,7 +6,7 @@ import (
 	"github.com/guregu/null"
 )
 
-// Verify search with location and search term
+// TestGeneralOptions will verify search with location and search term.
 func TestGeneralOptions(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{
@@ -22,7 +22,7 @@ func TestGeneralOptions(t *testing.T) {
 	assert(t, len(result.Businesses) > 0, contains_results)
 }
 
-// Verify URL escaped characters do not cause search to fail
+// TestUnescapedCharactersInGeneralOptions verify URL escaped characters do not cause search to fail.
 func TestUnescapedCharactersInGeneralOptions(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{
@@ -38,7 +38,7 @@ func TestUnescapedCharactersInGeneralOptions(t *testing.T) {
 	assert(t, len(result.Businesses) > 0, contains_results)
 }
 
-// Perform a search with multiple categories on the general options filter.
+// TestMultipleCategories will perform a search with multiple categories on the general options filter.
 func TestMultipleCategories(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{
@@ -54,7 +54,7 @@ func TestMultipleCategories(t *testing.T) {
 	assert(t, len(result.Businesses) > 0, contains_results)
 }
 
-// Verify the limit parameter works as expected.
+// TestLimit verify the limit parameter works as expected.
 func TestLimit(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{

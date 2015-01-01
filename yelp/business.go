@@ -1,6 +1,34 @@
 package yelp
 
-// Deals define a set of special offerings from the business.
+// A SearchResult is returned from the Search API.  It includes
+// the region, the total number of results, and a list of matching businesses.
+// The business objects returned by this query are shallow - they will not include
+// deep results such as reviews.
+type SearchResult struct {
+	Region     Region     // Suggested bounds in a map to display results in
+	Total      int        // Total number of business results
+	Businesses []Business // The list of business entries (see Business)
+}
+
+// Region provides the location of a business obtained from search.
+type Region struct {
+	Span   Span   // Span of suggested map bounds
+	Center Center // Center position of map bounds
+}
+
+// Span provides the variance of the location from the region in the search result.
+type Span struct {
+	Latitude_delta  float32 // Latitude width of map bounds
+	Longitude_delta float32 // Longitude height of map bounds
+}
+
+// Center provides the coordinate where the business is most likely to be located.
+type Center struct {
+	Latitude  float32 // Latitude position of map bounds center
+	Longitude float32 // Longitude position of map bounds center
+}
+
+// Deal defines a set of special offerings from the business.
 type Deal struct {
 	Id                      string       // Deal identifier
 	Title                   string       // Deal title
@@ -17,7 +45,7 @@ type Deal struct {
 
 }
 
-// Deals can optionally define a set of options.
+// DealOptions are optionally included on a deal.
 type DealOption struct {
 	Title                    string  // Deal option title
 	Purchase_url             string  // Deal option url for purchase
@@ -29,7 +57,7 @@ type DealOption struct {
 	Remaining_count          float32 // The remaining deal options available for purchase (optional: this field is only present if the deal is limited)
 }
 
-// Businesses may offer a set of gift certificates.
+// GiftCertificate defines optional data available on Businesses.
 type GiftCertificate struct {
 	Id              string                   // Gift certificate identifier
 	Url             string                   // Gift certificate landing page url
@@ -39,13 +67,13 @@ type GiftCertificate struct {
 	Options         []GiftCertificateOptions //	Gift certificate options
 }
 
-// Gift certificates can define a set of pricing options.
+// GiftCertificateOptions can define a set of pricing options for a gift certificate.
 type GiftCertificateOptions struct {
 	Price           float32 //	Gift certificate option price (in cents)
 	Formatted_price string  //	Gift certificate option price (formatted, e.g. "$50")
 }
 
-// Businesses (when queried using the Business API) may contain a list of user reviews.
+// Review data contains a list of user reviews for a given Business (when queried using the Business API).
 type Review struct {
 	Id                     string  // Review identifier
 	Rating                 float32 // Rating from 1-5
@@ -57,14 +85,14 @@ type Review struct {
 	User                   User    // User who wrote the review
 }
 
-// Users are linked off of reviews.
+// User data is linked off of reviews.
 type User struct {
 	Id        string // User identifier
 	Image_url string // User profile image url
 	Name      string // User name
 }
 
-// Coordinates are used with location information.
+// Coordinate data is used with location information.
 type Coordinate struct {
 	Latitude  float32 // Latitude of current location
 	Longitude float32 // Longitude of current location

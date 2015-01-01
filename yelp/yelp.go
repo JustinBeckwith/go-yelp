@@ -32,14 +32,14 @@ type AuthOptions struct {
 	AccessTokenSecret string // Token Secret from the yelp API access site.
 }
 
-// All searches are performed from an instance of a client.  It is the top level
-// object used to perform a search or business query.  Client objects should be
-// created through the createClient API.
+// Client manages all searches.  All searches are performed from an instance of a client.
+// It is the top level object used to perform a search or business query.  Client objects
+// should be created through the createClient API.
 type Client struct {
 	Options AuthOptions
 }
 
-// Perform a simple search with a term and location.
+// DoSimpleSearch performs a simple search with a term and location.
 func (client *Client) DoSimpleSearch(term, location string) (result SearchResult, err error) {
 
 	// verify the term and location are not empty
@@ -67,7 +67,7 @@ func (client *Client) DoSimpleSearch(term, location string) (result SearchResult
 	return result, nil
 }
 
-// Perform a complex search with full search options.
+// DoSearch performs a complex search with full search options.
 func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err error) {
 
 	// get the options from the search provider
@@ -90,7 +90,7 @@ func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err 
 	return result, nil
 }
 
-// Get a single business by name.
+// GetBusiness obtains a single business by name.
 func (client *Client) GetBusiness(name string) (result Business, err error) {
 	rawResult, statusCode, err := client.makeRequest(business_area, name, nil)
 	if err != nil {
@@ -107,7 +107,7 @@ func (client *Client) GetBusiness(name string) (result Business, err error) {
 	return result, nil
 }
 
-// Internal/private API used to make underlying requests to the Yelp API.
+// makeRequest is an internal/private API used to make underlying requests to the Yelp API.
 func (client *Client) makeRequest(area string, id string, params map[string]string) (result []byte, statusCode int, err error) {
 
 	// get the base url
@@ -162,7 +162,7 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 	return bits, response.StatusCode, nil
 }
 
-// Create a new yelp search client.  All search operations should go through this API.
+// New will create a new yelp search client.  All search operations should go through this API.
 func New(options AuthOptions) Client {
 	return Client{options}
 }

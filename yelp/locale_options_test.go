@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-// Verify doing a search that includes locale options.
+// TestLocaleOptions will verify doing a search that includes locale options.
 func TestLocaleOptions(t *testing.T) {
 	client := getClient(t)
 	options := SearchOptions{

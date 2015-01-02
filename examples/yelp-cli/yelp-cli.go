@@ -1,3 +1,5 @@
+// This example demonstrates reading a term and location from the command line
+// and performing a search using the yelp API.
 package main
 
 import (

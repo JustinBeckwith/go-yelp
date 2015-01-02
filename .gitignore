@@ -1,3 +1,4 @@
 config.json
 results.txt
 /examples/yelp-cli/yelp-cli
+/examples/yelp-http/yelp-http

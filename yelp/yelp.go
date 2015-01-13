@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/url"
 
 	"github.com/mrjones/oauth"
@@ -54,13 +53,7 @@ func (client *Client) DoSimpleSearch(term, location string) (result SearchResult
 	}
 
 	// perform the search request
-	rawResult, _, err := client.makeRequest(searchArea, "", params)
-	if err != nil {
-		return SearchResult{}, err
-	}
-
-	// convert the result from json
-	err = json.Unmarshal(rawResult, &result)
+	_, err = client.makeRequest(searchArea, "", params, &result)
 	if err != nil {
 		return SearchResult{}, err
 	}
@@ -77,13 +70,7 @@ func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err 
 	}
 
 	// perform the search request
-	rawResult, _, err := client.makeRequest(searchArea, "", params)
-	if err != nil {
-		return SearchResult{}, err
-	}
-
-	// convert the result from json
-	err = json.Unmarshal(rawResult, &result)
+	_, err = client.makeRequest(searchArea, "", params, &result)
 	if err != nil {
 		return SearchResult{}, err
 	}
@@ -92,28 +79,23 @@ func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err 
 
 // GetBusiness obtains a single business by name.
 func (client *Client) GetBusiness(name string) (result Business, err error) {
-	rawResult, statusCode, err := client.makeRequest(businessArea, name, nil)
+	statusCode, err := client.makeRequest(businessArea, name, nil, &result)
 	if err != nil {
 		if statusCode == 404 {
 			return Business{}, errBusinessNotFound
 		}
 		return Business{}, err
 	}
-
-	err = json.Unmarshal(rawResult, &result)
-	if err != nil {
-		return Business{}, err
-	}
 	return result, nil
 }
 
 // makeRequest is an internal/private API used to make underlying requests to the Yelp API.
-func (client *Client) makeRequest(area string, id string, params map[string]string) (result []byte, statusCode int, err error) {
+func (client *Client) makeRequest(area string, id string, params map[string]string, v interface{}) (statusCode int, err error) {
 
 	// get the base url
 	queryURI, err := url.Parse(rootURI)
 	if err != nil {
-		return nil, 0, err
+		return 0, err
 	}
 
 	// add the type of request we're making (search|business)
@@ -146,20 +128,16 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 	defer response.Body.Close()
 
 	if err != nil {
-		return nil, response.StatusCode, err
+		return response.StatusCode, err
 	}
 
 	// ensure the request returned a 200
 	if response.StatusCode != 200 {
-		return nil, response.StatusCode, errors.New(response.Status)
+		return response.StatusCode, errors.New(response.Status)
 	}
 
-	// read the body of the response
-	bits, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return nil, response.StatusCode, err
-	}
-	return bits, response.StatusCode, nil
+	err = json.NewDecoder(response.Body).Decode(v)
+	return response.StatusCode, err
 }
 
 // New will create a new yelp search client.  All search operations should go through this API.

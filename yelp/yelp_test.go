@@ -31,15 +31,15 @@ func assert(t *testing.T, condition bool, assertion string) {
 
 // getClient creates a client with keys in a json file, making it possible to run the
 // tests against the public Yelp API.
-func getClient(t *testing.T) Client {
+func getClient(t *testing.T) *Client {
 
-	var o AuthOptions
+	var o *AuthOptions
 
 	// start by looking for the keys in config.json
 	data, err := ioutil.ReadFile("../config.json")
 	if err != nil {
 		// if the file isn't there, check environment variables
-		o = AuthOptions{
+		o = &AuthOptions{
 			ConsumerKey:       os.Getenv("CONSUMER_KEY"),
 			ConsumerSecret:    os.Getenv("CONSUMER_SECRET"),
 			AccessToken:       os.Getenv("ACCESS_TOKEN"),
@@ -52,7 +52,7 @@ func getClient(t *testing.T) Client {
 		err = json.Unmarshal(data, &o)
 		check(t, err)
 	}
-	client := New(o)
+	client := New(o, nil)
 	return client
 }
 

@@ -2,7 +2,6 @@ package yelp
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 )
 
@@ -45,7 +44,6 @@ func (o *SearchOptions) getParameters() (params map[string]string, err error) {
 	if locOptionsCnt > 1 {
 		return params, errors.New("only a single location search options type (Location, Coordinate, Bound) can be used at a time")
 	}
-	fmt.Printf("There are %v location options defined\n", locOptionsCnt)
 
 	// create an empty map of options
 	params = make(map[string]string)

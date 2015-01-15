@@ -25,7 +25,7 @@ func main() {
 	}
 
 	// create a new yelp client with the auth keys
-	client := yelp.New(o)
+	client := yelp.New(&o, nil)
 
 	// make a simple query
 	term := os.Args[1]

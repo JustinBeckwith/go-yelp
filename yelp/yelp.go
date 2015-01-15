@@ -5,10 +5,10 @@ package yelp
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
+	"net/http"
 	"net/url"
 
-	"github.com/mrjones/oauth"
+	"github.com/JustinBeckwith/oauth"
 )
 
 const (
@@ -35,7 +35,8 @@ type AuthOptions struct {
 // It is the top level object used to perform a search or business query.  Client objects
 // should be created through the createClient API.
 type Client struct {
-	Options AuthOptions
+	Options *AuthOptions
+	Client  *http.Client
 }
 
 // DoSimpleSearch performs a simple search with a term and location.
@@ -106,14 +107,15 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 	}
 
 	// set up OAUTH
-	c := oauth.NewConsumer(
+	c := oauth.NewCustomHttpClientConsumer(
 		client.Options.ConsumerKey,
 		client.Options.ConsumerSecret,
 		oauth.ServiceProvider{
 			RequestTokenUrl:   "",
 			AuthorizeTokenUrl: "",
 			AccessTokenUrl:    "",
-		})
+		},
+		client.Client)
 	token := &oauth.AccessToken{
 		client.Options.AccessToken,
 		client.Options.AccessTokenSecret,
@@ -123,13 +125,16 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 	// make the request using the oauth lib
 	response, err := c.Get(queryURI.String(), params, token)
 
-	// always log the url, and close the request when done
-	fmt.Printf("%v\n", response.Request.URL.String())
-	defer response.Body.Close()
-
 	if err != nil {
-		return response.StatusCode, err
+		if response != nil {
+			return response.StatusCode, err
+		} else {
+			return 500, err
+		}
 	}
+
+	// close the request when done
+	defer response.Body.Close()
 
 	// ensure the request returned a 200
 	if response.StatusCode != 200 {
@@ -141,6 +146,13 @@ func (client *Client) makeRequest(area string, id string, params map[string]stri
 }
 
 // New will create a new yelp search client.  All search operations should go through this API.
-func New(options AuthOptions) Client {
-	return Client{options}
+func New(options *AuthOptions, httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = http.DefaultClient
+	}
+
+	return &Client{
+		Options: options,
+		Client:  httpClient,
+	}
 }

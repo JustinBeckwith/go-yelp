@@ -1,7 +1,9 @@
 // This example demonstrates using querystring parameters to perform
-// a simple query with the yelp API.
-// Example url:  http://localhost:8000/?term=coffee&location=seattle
-package main
+// a simple query with the yelp API.  It will only run with the google
+// app engine SDK using `goapp serve`
+// Example url:  http://localhost:8080/?term=coffee&location=seattle
+
+package yelpgae
 
 import (
 	"encoding/json"
@@ -12,12 +14,13 @@ import (
 	"net/http"
 	"os"
 
+	"appengine"
+	"appengine/urlfetch"
 	"github.com/JustinBeckwith/go-yelp/yelp"
 )
 
-func main() {
+func init() {
 	http.HandleFunc("/", res)
-	http.ListenAndServe(":8000", nil)
 }
 
 func res(w http.ResponseWriter, r *http.Request) {
@@ -26,17 +29,25 @@ func res(w http.ResponseWriter, r *http.Request) {
 	options, err := getOptions(w)
 	if err != nil {
 		fmt.Println(err)
+		io.WriteString(w, fmt.Sprintf("ERROR: %v", err))
 	}
 
-	// create a new yelp client with the auth keys
-	client := yelp.New(options, nil)
+	// google app engine requires it's own class for making http requests
+	c := appengine.NewContext(r)
+	httpClient := urlfetch.Client(c)
+
+	// create a new yelp client with the auth keys and the custom http client
+	client := yelp.New(options, httpClient)
 
 	// make a simple query
 	term := r.URL.Query().Get("term")
 	location := r.URL.Query().Get("location")
+
+	// call the yelp API
 	results, err := client.DoSimpleSearch(term, location)
 	if err != nil {
 		fmt.Println(err)
+		io.WriteString(w, fmt.Sprintf("ERROR: %v", err))
 	}
 
 	// print the results
@@ -54,7 +65,7 @@ func getOptions(w http.ResponseWriter) (options *yelp.AuthOptions, err error) {
 	var o *yelp.AuthOptions
 
 	// start by looking for the keys in config.json
-	data, err := ioutil.ReadFile("../../config.json")
+	data, err := ioutil.ReadFile("config.json")
 	if err != nil {
 		// if the file isn't there, check environment variables
 		o = &yelp.AuthOptions{

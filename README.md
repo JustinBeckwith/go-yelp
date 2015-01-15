@@ -46,7 +46,7 @@ The simple search API enables searching for businesses with a term and a locatio
 ```go
 import "github.com/JustinBeckwith/go-yelp/yelp"
 
-client := yelp.New(options)
+client := yelp.New(options, nil)
 result, err := client.DoSimpleSearch("coffee", "seattle")
 ```
 
@@ -76,7 +76,7 @@ result, err := client.DoSearch(options)
 To directly search for a business by name, use the `client.GetBusiness(...)` method on the client:
 
 ```go
-client := yelp.New(options)
+client := yelp.New(options, nil)
 result, err := client.GetBusiness("yelp-san-francisco")
 ```
 

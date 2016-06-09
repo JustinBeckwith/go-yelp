@@ -82,7 +82,9 @@ func (client *Client) DoSearch(options SearchOptions) (result SearchResult, err 
 func (client *Client) GetBusiness(name string) (result Business, err error) {
 	statusCode, err := client.makeRequest(businessArea, name, nil, &result)
 	if err != nil {
-		if statusCode == 404 {
+		// At some point the Yelp API stopped reporting 404s for missing business names, and
+		// started reporting 400s :(
+		if statusCode == 400 {
 			return Business{}, errBusinessNotFound
 		}
 		return Business{}, err

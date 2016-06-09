@@ -1,0 +1,16 @@
+{
+	"ImportPath": "github.com/JustinBeckwith/go-yelp/yelp",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v74",
+	"Deps": [
+		{
+			"ImportPath": "github.com/JustinBeckwith/oauth",
+			"Rev": "a1577bd3870218dc30725a7cf4655e9917e3751b"
+		},
+		{
+			"ImportPath": "github.com/guregu/null",
+			"Comment": "v3.1",
+			"Rev": "41961cea0328defc5f95c1c473f89ebf0d1813f6"
+		}
+	]
+}
